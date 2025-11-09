@@ -1,0 +1,326 @@
+﻿@{
+    ViewData["Title"] = "Join Elite Health Club";
+}
+
+<style>
+    .join-hero-section {
+        height: 60vh;
+        background: linear-gradient(rgba(5, 5, 5, 0.70), transparent), url('/images/gym-main.jpg');
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: center;
+        margin-top: -80px;
+    }
+</style>
+
+<!-- Hero Section -->
+<section class="join-hero-section">
+    <div class="container">
+        <div class="row justify-content-center text-center">
+            <div class="col-lg-8">
+                <h1 class="hero-title">Official Membership Plans</h1>
+                <p class="hero-subtitle">Transparent pricing. No surprises.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Membership Plans Section -->
+<section class="py-5 bg-transparent">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <h2 class="section-title text-center mb-5">Choose Your Membership</h2>
+
+                <div class="row">
+                    <!-- General Membership -->
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="membership-plan">
+                            <h3 class="plan-title">GENERAL</h3>
+                            <div class="plan-price">R350<span>/month</span></div>
+                            <ul class="plan-features">
+                                <li>Full gym access</li>
+                                <li>All equipment included</li>
+                                <li>Locker room facilities</li>
+                                <li>Free parking</li>
+                            </ul>
+                            <a href="https://wa.me/27655172764?text=Hi! I'm interested in the GENERAL membership (R350/month)"
+                               class="btn btn-outline-gold w-100" target="_blank">Choose General</a>
+                        </div>
+                    </div>
+
+                    <!-- Debit Membership -->
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="membership-plan">
+                            <h3 class="plan-title">DEBIT ORDER</h3>
+                            <div class="plan-price">R250<span>/month</span></div>
+                            <ul class="plan-features">
+                                <li>All General benefits</li>
+                                <li>Convenient monthly debit</li>
+                                <li>No price increases</li>
+                                <li>Easy cancellation</li>
+                            </ul>
+                            <a href="https://wa.me/27655172764?text=Hi! I'm interested in the DEBIT membership (R250/month)"
+                               class="btn btn-outline-gold w-100" target="_blank">Choose Debit</a>
+                        </div>
+                    </div>
+
+                    <!-- Student Membership -->
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="membership-plan">
+                            <h3 class="plan-title">STUDENT</h3>
+                            <div class="plan-price">R200<span>/month</span></div>
+                            <ul class="plan-features">
+                                <li>Special student pricing</li>
+                                <li>Debit order available</li>
+                                <li>Valid student ID required</li>
+                                <li>All gym access included</li>
+                            </ul>
+                            <a href="https://wa.me/27655172764?text=Hi! I'm interested in the STUDENT membership (R200/month)"
+                               class="btn btn-outline-gold w-100" target="_blank">Choose Student</a>
+                        </div>
+                    </div>
+
+                    <!-- Pensioner Membership -->
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="membership-plan">
+                            <h3 class="plan-title">PENSIONER</h3>
+                            <div class="plan-price">R250<span>/month</span></div>
+                            <ul class="plan-features">
+                                <li>Special pensioner rate</li>
+                                <li>General membership benefits</li>
+                                <li>Peaceful training environment</li>
+                                <li>Senior-friendly equipment</li>
+                            </ul>
+                            <a href="https://wa.me/27655172764?text=Hi! I'm interested in the PENSIONER membership (R250/month)"
+                               class="btn btn-outline-gold w-100" target="_blank">Choose Pensioner</a>
+                        </div>
+                    </div>
+
+                    <!-- 6 Month Package -->
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="membership-plan">
+                            <h3 class="plan-title">6 MONTH PACKAGE</h3>
+                            <div class="plan-price">R1,500<span>/once off</span></div>
+                            <ul class="plan-features">
+                                <li>6 months full access</li>
+                                <li>Save R300 total</li>
+                                <li>No monthly payments</li>
+                                <li>Perfect commitment package</li>
+                            </ul>
+                            <a href="https://wa.me/27655172764?text=Hi! I'm interested in the 6 MONTH PACKAGE (R1500 once off)"
+                               class="btn btn-outline-gold w-100" target="_blank">Choose 6 Months</a>
+                        </div>
+                    </div>
+
+                    <!-- Family Membership -->
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="membership-plan">
+                            <h3 class="plan-title">FAMILY PACKAGE</h3>
+                            <div class="plan-price">R800<span>/month</span></div>
+                            <ul class="plan-features">
+                                <li>Minimum 4 family members</li>
+                                <li>Massive family savings</li>
+                                <li>All individual benefits</li>
+                                <li>Perfect for households</li>
+                            </ul>
+                            <a href="https://wa.me/27655172764?text=Hi! I'm interested in the FAMILY PACKAGE (R800/month for 4+ members)"
+                               class="btn btn-outline-gold w-100" target="_blank">Choose Family</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day Pass -->
+                <div class="row justify-content-center mt-4">
+                    <div class="col-lg-6">
+                        <div class="day-pass-card text-center">
+                            <h3 class="gold-text">DAY PASS</h3>
+                            <div class="day-pass-price">R50</div>
+                            <p class="text-light">Try our facilities for a day</p>
+                            <a href="https://wa.me/27655172764?text=Hi! I'm interested in a DAY PASS (R50)"
+                               class="btn btn-outline-gold" target="_blank">Get Day Pass</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Small discreet notice -->
+                <div class="text-center mt-5">
+                    <p class="text-muted small">
+                        <i class="fas fa-info-circle me-1"></i>
+                        All memberships subject to standard terms and conditions
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Operating Hours Section -->
+<section class="py-5 bg-transparent">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <h2 class="section-title text-center mb-5">Operating Hours</h2>
+                <div class="hours-container">
+                    <div class="hours-card">
+                        <div class="hours-row">
+                            <span class="hours-day">Monday - Thursday</span>
+                            <span class="hours-time">05:00 - 21:00</span>
+                        </div>
+                        <div class="hours-row">
+                            <span class="hours-day">Friday</span>
+                            <span class="hours-time">05:00 - 20:00</span>
+                        </div>
+                        <div class="hours-row">
+                            <span class="hours-day">Saturday</span>
+                            <span class="hours-time">06:00 - 16:00</span>
+                        </div>
+                        <div class="hours-row">
+                            <span class="hours-day">Sunday</span>
+                            <span class="hours-time">06:00 - 14:00</span>
+                        </div>
+                        <div class="hours-row highlight">
+                            <span class="hours-day">Public Holidays</span>
+                            <span class="hours-time">06:00 - 14:00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .membership-plan {
+        background: var(--darker-bg);
+        border: 2px solid rgba(212, 175, 55, 0.3);
+        border-radius: 15px;
+        padding: 2rem;
+        height: 100%;
+        position: relative;
+        transition: all 0.3s ease;
+    }
+
+        .membership-plan:hover {
+            border-color: var(--gold);
+            transform: translateY(-5px);
+        }
+
+    .plan-title {
+        color: var(--gold);
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .plan-price {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--text-light);
+        margin-bottom: 1rem;
+        text-align: center;
+    }
+
+        .plan-price span {
+            font-size: 1rem;
+            color: var(--text-muted);
+        }
+
+    .plan-features {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 1.5rem;
+    }
+
+        .plan-features li {
+            padding: 0.5rem 0;
+            color: var(--text-light);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+        }
+
+            .plan-features li:last-child {
+                border-bottom: none;
+            }
+
+    .day-pass-card {
+        background: var(--darker-bg);
+        border: 2px solid rgba(212, 175, 55, 0.3);
+        border-radius: 15px;
+        padding: 2rem;
+        transition: all 0.3s ease;
+    }
+
+        .day-pass-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-5px);
+        }
+
+    .day-pass-price {
+        font-size: 3rem;
+        font-weight: 700;
+        color: var(--gold);
+        margin: 1rem 0;
+    }
+
+    /* Operating Hours */
+    .hours-container {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    .hours-card {
+        background: var(--darker-bg);
+        border: 2px solid rgba(212, 175, 55, 0.3);
+        border-radius: 15px;
+        padding: 2rem;
+    }
+
+    .hours-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 0;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+        .hours-row:last-child {
+            border-bottom: none;
+        }
+
+        .hours-row.highlight {
+            background: rgba(212, 175, 55, 0.1);
+            margin: 0 -2rem;
+            padding: 1rem 2rem;
+            border-radius: 0 0 13px 13px;
+            border-bottom: none;
+        }
+
+    .hours-day {
+        color: var(--text-light);
+        font-weight: 500;
+    }
+
+    .hours-time {
+        color: var(--gold);
+        font-weight: 600;
+    }
+
+    @@media (max-width: 768px) {
+        .membership-plan {
+            padding: 1.5rem;
+        }
+
+        .plan-price {
+            font-size: 2rem;
+        }
+
+        .hours-row {
+            flex-direction: column;
+            text-align: center;
+            gap: 0.5rem;
+        }
+    }
+</style>

@@ -1,0 +1,118 @@
+﻿@{
+    ViewData["Title"] = "About Elite Health Club";
+}
+
+<style>
+    .about-hero-section {
+        height: 60vh;
+        background: linear-gradient(rgba(10, 10, 10, 0.8), rgba(212, 175, 55, 0.3)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: center;
+        margin-top: -80px;
+    }
+</style>
+
+<!-- Hero Section -->
+<section class="about-hero-section">
+    <div class="container">
+        <div class="row justify-content-center text-center">
+            <div class="col-lg-8">
+                <h1 class="hero-title">About Elite Health Club</h1>
+                <p class="hero-subtitle">More than a gym - it's a lifestyle</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main Content -->
+<section class="py-5 bg-dark">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="about-content">
+                    <h2 class="section-title mb-4">Our Story</h2>
+                    <p class="about-text">
+                        Elite Health Club was founded with a simple mission: to create a fitness sanctuary where
+                        individuals can transform not just their bodies, but their lives. Located in the heart of
+                        Durban at The Spark Lifestyle Centre, we've become the premier destination for those who
+                        refuse to settle for ordinary.
+                    </p>
+
+                    <h3 class="gold-text mb-3">Why Choose Elite?</h3>
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="feature-card">
+                                <i class="fas fa-dumbbell gold-text mb-3" style="font-size: 2rem;"></i>
+                                <h4>World-Class Equipment</h4>
+                                <p>State-of-the-art fitness equipment from leading international brands</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="feature-card">
+                                <i class="fas fa-users gold-text mb-3" style="font-size: 2rem;"></i>
+                                <h4>Expert Trainers</h4>
+                                <p>Certified professionals dedicated to your fitness journey</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="feature-card">
+                                <i class="fas fa-heart gold-text mb-3" style="font-size: 2rem;"></i>
+                                <h4>Supportive Community</h4>
+                                <p>Join a family that motivates and inspires each other</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="feature-card">
+                                <i class="fas fa-star gold-text mb-3" style="font-size: 2rem;"></i>
+                                <h4>Premium Facilities</h4>
+                                <p>Luxurious amenities for the complete fitness experience</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="gold-text mb-3">Our Philosophy</h3>
+                    <p class="about-text">
+                        At Elite Health Club, we believe that true transformation happens when mind, body, and
+                        spirit align. We're not just about lifting weights; we're about lifting standards.
+                        Every drop of sweat, every rep, every moment of discipline brings you closer to the
+                        elite version of yourself.
+                    </p>
+
+                    <div class="text-center mt-5">
+                        <a href="/Home/Join" class="btn btn-gold btn-lg me-3">Join Today</a>
+                        <a href="/Home/Contact" class="btn btn-outline-gold btn-lg">Get In Touch</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .feature-card {
+        background: var(--darker-bg);
+        padding: 2rem;
+        border-radius: 10px;
+        border: 1px solid rgba(212, 175, 55, 0.2);
+        text-align: center;
+        height: 100%;
+        transition: transform 0.3s ease;
+    }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--gold);
+        }
+
+        .feature-card h4 {
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            color: var(--text-light);
+            margin: 0;
+        }
+</style>
