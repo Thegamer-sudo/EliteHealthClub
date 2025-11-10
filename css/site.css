@@ -16,7 +16,9 @@
 
 body {
     font-family: 'Poppins', sans-serif;
-    background: var(--dark-bg);
+    background: linear-gradient(rgba(5, 5, 5, 0.70), rgba(5, 5, 5, 0.70)), url('images/gym-main.jpg') fixed;
+    background-size: cover;
+    background-position: center;
     color: var(--text-light);
     line-height: 1.6;
     overflow-x: hidden;
