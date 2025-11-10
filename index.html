@@ -8,47 +8,40 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/site.css">
-    <style>
-        .membership-section {
-            background: linear-gradient(rgba(5, 5, 5, 0.70), transparent), url('images/gym-main.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-        }
-    </style>
+    <!-- REMOVED CONFLICTING BACKGROUND STYLE -->
 </head>
 <body>
     <!-- CORRECT NAVIGATION FOR ALL PAGES -->
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top custom-navbar">
-    <div class="container">
-        <a class="navbar-brand" href="index.html">
-            <img src="images/elite-logo.png" alt="Elite Health Club" class="logo-img">
-            <span class="logo-text">ELITE HEALTH CLUB</span>
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="index.html">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="join.html">Join</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="about.html">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="contact.html">Contact</a>
-                </li>
-                <li class="nav-item ms-2">
-                    <a class="btn btn-gold" href="https://wa.me/27655172764" target="_blank" rel="noopener noreferrer">Join Now</a>
-                </li>
-            </ul>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top custom-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="images/elite-logo.png" alt="Elite Health Club" class="logo-img">
+                <span class="logo-text">ELITE HEALTH CLUB</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="join.html">Join</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                    <li class="nav-item ms-2">
+                        <a class="btn btn-gold" href="https://wa.me/27655172764" target="_blank" rel="noopener noreferrer">Join Now</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
     <!-- Main Content -->
     <main role="main">
@@ -118,7 +111,8 @@
         </section>
 
         <!-- Membership Invite Section -->
-        <section id="membership" class="membership-section py-5">
+        <!-- CHANGED: Remove membership-section class and use bg-transparent instead -->
+        <section id="membership" class="py-5 bg-transparent">
             <div class="container">
                 <div class="row justify-content-center text-center">
                     <div class="col-lg-8">
@@ -130,6 +124,8 @@
                 </div>
             </div>
         </section>
+
+        <!-- ... REST OF YOUR CODE REMAINS EXACTLY THE SAME ... -->
 
         <!-- Membership Journey Section -->
         <section class="py-5 bg-transparent">
