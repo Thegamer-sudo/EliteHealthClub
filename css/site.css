@@ -917,3 +917,47 @@ html, body {
 body::after {
     display: none !important;
 }
+
+/* MOBILE FIXES */
+@media (max-width: 768px) {
+    /* Fix hero section on mobile */
+    .hero-section {
+        height: 80vh !important;
+        padding: 2rem 0;
+    }
+    
+    .hero-title {
+        font-size: 2rem !important;
+        margin-bottom: 1rem !important;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.2rem !important;
+    }
+    
+    /* Fix cylinder on mobile */
+    .cylinder-container {
+        height: 250px !important;
+    }
+    
+    .cylinder {
+        width: 200px !important;
+        height: 200px !important;
+    }
+    
+    .cylinder-face {
+        width: 130px !important;
+        height: 200px !important;
+    }
+    
+    /* Fix membership cards on mobile */
+    .membership-plan {
+        margin-bottom: 1.5rem !important;
+    }
+    
+    /* Fix buttons on mobile */
+    .btn-gold, .btn-outline-gold {
+        padding: 0.8rem 1.5rem !important;
+        font-size: 0.9rem !important;
+    }
+}
