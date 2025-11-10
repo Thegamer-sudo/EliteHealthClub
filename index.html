@@ -8,7 +8,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/site.css">
-    <!-- REMOVED CONFLICTING BACKGROUND STYLE -->
+    
+    <!-- FORCE BACKGROUND TO SHOW -->
+    <style>
+        body { background: url('images/gym-main.jpg') fixed !important; background-size: cover !important; }
+        body::before, body::after, .overlay { display: none !important; }
+        body, main, section { background: transparent !important; }
+    </style>
 </head>
 <body>
     <!-- CORRECT NAVIGATION FOR ALL PAGES -->
