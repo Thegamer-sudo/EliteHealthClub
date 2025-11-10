@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contact Elite Health Club - Get In Touch</title>
+    <title>Contact Elite Health Club</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -11,13 +11,51 @@
     <style>
         .contact-hero-section {
             height: 60vh;
-            background: linear-gradient(rgba(5, 5, 5, 0.8), rgba(212, 175, 55, 0.3)), 
-                        url('/images/gym-main.jpg');
+            background: linear-gradient(rgba(10, 10, 10, 0.8), rgba(212, 175, 55, 0.3)), 
+                        url('images/gym-main.jpg');
             background-size: cover;
             background-position: center;
             display: flex;
             align-items: center;
             margin-top: -80px;
+        }
+
+        .contact-info-card {
+            background: var(--darker-bg);
+            padding: 2rem;
+            border-radius: 10px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            height: 100%;
+            transition: transform 0.3s ease;
+        }
+
+            .contact-info-card:hover {
+                transform: translateY(-5px);
+                border-color: var(--gold);
+            }
+
+        .social-links {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .map-placeholder {
+            background: var(--darker-bg);
+            border-radius: 15px;
+            padding: 4rem 2rem;
+            text-align: center;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .map-content {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        @@media (max-width: 768px) {
+            .social-links .btn {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -25,8 +63,8 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top custom-navbar">
         <div class="container">
-            <a class="navbar-brand" href="/">
-                <img src="/images/elite-logo.png" alt="Elite Health Club" class="logo-img">
+            <a class="navbar-brand" href="index.html">
+                <img src="images/elite-logo.png" alt="Elite Health Club" class="logo-img">
                 <span class="logo-text">ELITE HEALTH CLUB</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -35,16 +73,16 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/">Home</a>
+                        <a class="nav-link" href="index.html">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/join.html">Join</a>
+                        <a class="nav-link" href="join.html">Join</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/about.html">About</a>
+                        <a class="nav-link" href="about.html">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/contact.html">Contact</a>
+                        <a class="nav-link" href="contact.html">Contact</a>
                     </li>
                     <li class="nav-item ms-2">
                         <a class="btn btn-gold" href="https://wa.me/27655172764" target="_blank" rel="noopener noreferrer">Join Now</a>
@@ -67,7 +105,7 @@
     </section>
 
     <!-- Contact Content -->
-    <section class="py-5 bg-transparent">
+    <section class="py-5 bg-dark">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 mx-auto">
@@ -97,7 +135,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="row mt-4">
                         <div class="col-md-6 mb-4">
                             <div class="contact-info-card">
@@ -111,21 +149,21 @@
                         <div class="col-md-6 mb-4">
                             <div class="contact-info-card">
                                 <h3 class="gold-text mb-4"><i class="fas fa-share-alt me-2"></i>Connect With Us</h3>
-                                <div class="social-links">
-                                    <a href="https://www.instagram.com/elitehealthclub/" class="btn btn-outline-gold me-2 mb-2" target="_blank" rel="noopener noreferrer">
-                                        <i class="fab fa-instagram me-2"></i>Instagram
+                                <div class="social-icons">
+                                    <a href="https://www.instagram.com/elitehealthclub/" class="text-gold me-3" target="_blank" rel="noopener noreferrer">
+                                        <i class="fab fa-instagram"></i>
                                     </a>
-                                    <a href="https://www.facebook.com/elitehp/" class="btn btn-outline-gold me-2 mb-2" target="_blank" rel="noopener noreferrer">
-                                        <i class="fab fa-facebook me-2"></i>Facebook
+                                    <a href="https://www.facebook.com/elitehp/" class="text-gold me-3" target="_blank" rel="noopener noreferrer">
+                                        <i class="fab fa-facebook"></i>
                                     </a>
-                                    <a href="https://wa.me/27655172764" class="btn btn-outline-gold mb-2" target="_blank" rel="noopener noreferrer">
-                                        <i class="fab fa-whatsapp me-2"></i>WhatsApp
+                                    <a href="https://wa.me/27655172764" class="text-gold" target="_blank" rel="noopener noreferrer">
+                                        <i class="fab fa-whatsapp"></i>
                                     </a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Quick Action Buttons -->
                     <div class="text-center mt-5">
                         <div class="row">
@@ -140,7 +178,7 @@
                                 </a>
                             </div>
                             <div class="col-md-4 mb-3">
-                                <a href="/join.html" class="btn btn-outline-gold btn-lg w-100">
+                                <a href="join.html" class="btn btn-outline-gold btn-lg w-100">
                                     <i class="fas fa-dumbbell me-2"></i>Join Now
                                 </a>
                             </div>
@@ -163,7 +201,7 @@
                             <h4 class="gold-text mt-3">Elite Health Club</h4>
                             <p class="text-light">Level 3 – The Spark Lifestyle Centre</p>
                             <p class="text-light">98 Cannon Avenue, Overport, Durban</p>
-                            <a href="https://maps.google.com/?q=Level+3+The+Spark+Lifestyle+Centre+98+Cannon+Avenue+Overport+Durban" 
+                            <a href="https://maps.google.com/?q=Level+3+The+Spark+Lifestyle+Centre+98+Cannon+Avenue+Overport+Durban"
                                class="btn btn-gold mt-3" target="_blank" rel="noopener noreferrer">
                                 <i class="fas fa-directions me-2"></i>Get Directions
                             </a>
@@ -207,9 +245,9 @@
                 </div>
                 <div class="col-md-6 text-md-end">
                     <p class="mb-0 small">
-                        <a href="/privacy.html" class="text-gold me-3">Privacy Policy</a>
-                        <a href="/terms.html" class="text-gold me-3">Terms of Service</a>
-                        <span class="text-muted">Site by ThingsDoneImmediately.xyz</span>
+                        <a href="privacy.html" class="text-gold me-3">Privacy Policy</a>
+                        <a href="terms.html" class="text-gold me-3">Terms of Service</a>
+                        <span class="text-muted">Site by www.ThingsDoneImmediately.com</span>
                     </p>
                 </div>
             </div>
@@ -220,45 +258,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="js/site.js"></script>
-
-    <style>
-        .contact-info-card {
-            background: var(--darker-bg);
-            padding: 2rem;
-            border-radius: 10px;
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            height: 100%;
-            transition: transform 0.3s ease;
-        }
-        
-        .contact-info-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--gold);
-        }
-        
-        .social-links {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .map-placeholder {
-            background: var(--darker-bg);
-            border-radius: 15px;
-            padding: 4rem 2rem;
-            text-align: center;
-            border: 2px solid rgba(212, 175, 55, 0.3);
-        }
-        
-        .map-content {
-            max-width: 400px;
-            margin: 0 auto;
-        }
-        
-        @media (max-width: 768px) {
-            .social-links .btn {
-                width: 100%;
-            }
-        }
-    </style>
 </body>
 </html>
