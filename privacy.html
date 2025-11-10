@@ -12,7 +12,7 @@
         .policy-hero-section {
             height: 40vh;
             background: linear-gradient(rgba(5, 5, 5, 0.8), rgba(212, 175, 55, 0.3)), 
-                        url('images/gym-main.jpg'); /* FIXED PATH */
+                        url('images/gym-main.jpg');
             background-size: cover;
             background-position: center;
             display: flex;
@@ -21,16 +21,91 @@
             padding-top: 100px;
         }
         
-        .policy-content h2 {
-            color: var(--gold);
-            margin: 2rem 0 1rem 0;
-            font-size: 1.5rem;
+        .policy-content {
+            background: #050505;
+            border: 1px solid #D4AF37;
+            border-radius: 10px;
+            padding: 3rem;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+            position: relative;
         }
         
-        .policy-content h3 {
-            color: var(--text-light);
-            margin: 1.5rem 0 0.5rem 0;
-            font-size: 1.2rem;
+        .policy-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+        }
+        
+        .policy-content h2 {
+            color: #D4AF37;
+            margin: 2.5rem 0 1.5rem 0;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-left: 3px solid #D4AF37;
+            padding-left: 1rem;
+        }
+        
+        .policy-content h2:first-child {
+            margin-top: 0;
+        }
+        
+        .policy-content p, .policy-content li {
+            color: #f8f9fa;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+        
+        .policy-content ul {
+            padding-left: 1.5rem;
+        }
+        
+        .policy-content li {
+            margin-bottom: 0.5rem;
+            position: relative;
+        }
+        
+        .policy-content li::before {
+            content: '▸';
+            color: #D4AF37;
+            position: absolute;
+            left: -1.2rem;
+        }
+        
+        .contact-info {
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .contact-info strong {
+            color: #D4AF37;
+        }
+        
+        .update-notice {
+            color: #888 !important;
+            font-style: italic;
+            text-align: center;
+            border-top: 1px solid rgba(212, 175, 55, 0.3);
+            padding-top: 1rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .policy-content {
+                padding: 2rem 1.5rem;
+            }
+            
+            .policy-content h2 {
+                font-size: 1.3rem;
+            }
         }
     </style>
 </head>
@@ -38,8 +113,8 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top custom-navbar">
         <div class="container">
-            <a class="navbar-brand" href="index.html"> <!-- FIXED PATH -->
-                <img src="images/elite-logo.png" alt="Elite Health Club" class="logo-img"> <!-- FIXED PATH -->
+            <a class="navbar-brand" href="index.html">
+                <img src="images/elite-logo.png" alt="Elite Health Club" class="logo-img">
                 <span class="logo-text">ELITE HEALTH CLUB</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -48,16 +123,16 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html">Home</a> <!-- FIXED PATH -->
+                        <a class="nav-link" href="index.html">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="join.html">Join</a> <!-- FIXED PATH -->
+                        <a class="nav-link" href="join.html">Join</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="about.html">About</a> <!-- FIXED PATH -->
+                        <a class="nav-link" href="about.html">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="contact.html">Contact</a> <!-- FIXED PATH -->
+                        <a class="nav-link" href="contact.html">Contact</a>
                     </li>
                     <li class="nav-item ms-2">
                         <a class="btn btn-gold" href="https://wa.me/27655172764" target="_blank" rel="noopener noreferrer">Join Now</a>
@@ -85,68 +160,67 @@
             <div class="row justify-content-center">
                 <div class="col-lg-10">
                     <div class="policy-content">
-                        <div class="card bg-darker border-gold p-4">
-                            <h2>1. Information We Collect</h2>
-                            <p class="about-text">
-                                We collect personal information that you provide when joining Elite Health Club, including:
-                            </p>
-                            <ul class="about-text">
-                                <li>Full name and contact details</li>
-                                <li>Identity number for membership verification</li>
-                                <li>Emergency contact information</li>
-                                <li>Payment information for membership fees</li>
-                                <li>Health information relevant to your training</li>
-                            </ul>
+                        <h2>1. Information We Collect</h2>
+                        <p>
+                            We collect personal information that you provide when joining Elite Health Club, including:
+                        </p>
+                        <ul>
+                            <li>Full name and contact details</li>
+                            <li>Identity number for membership verification</li>
+                            <li>Emergency contact information</li>
+                            <li>Payment information for membership fees</li>
+                            <li>Health information relevant to your training</li>
+                        </ul>
 
-                            <h2>2. How We Use Your Information</h2>
-                            <p class="about-text">
-                                Your information is used to:
-                            </p>
-                            <ul class="about-text">
-                                <li>Process your membership and manage your account</li>
-                                <li>Provide personalized training services</li>
-                                <li>Communicate important club updates</li>
-                                <li>Ensure your safety and emergency contact</li>
-                                <li>Process payments and send receipts</li>
-                            </ul>
+                        <h2>2. How We Use Your Information</h2>
+                        <p>
+                            Your information is used to:
+                        </p>
+                        <ul>
+                            <li>Process your membership and manage your account</li>
+                            <li>Provide personalized training services</li>
+                            <li>Communicate important club updates</li>
+                            <li>Ensure your safety and emergency contact</li>
+                            <li>Process payments and send receipts</li>
+                        </ul>
 
-                            <h2>3. Data Protection</h2>
-                            <p class="about-text">
-                                We implement security measures to protect your personal information against 
-                                unauthorized access, alteration, or disclosure. Your data is stored securely 
-                                and accessed only by authorized staff.
-                            </p>
+                        <h2>3. Data Protection</h2>
+                        <p>
+                            We implement security measures to protect your personal information against 
+                            unauthorized access, alteration, or disclosure. Your data is stored securely 
+                            and accessed only by authorized staff.
+                        </p>
 
-                            <h2>4. Your Rights</h2>
-                            <p class="about-text">
-                                You have the right to:
-                            </p>
-                            <ul class="about-text">
-                                <li>Access your personal information we hold</li>
-                                <li>Request correction of inaccurate data</li>
-                                <li>Request deletion of your personal data</li>
-                                <li>Object to processing of your personal data</li>
-                                <li>Withdraw consent at any time</li>
-                            </ul>
+                        <h2>4. Your Rights</h2>
+                        <p>
+                            You have the right to:
+                        </p>
+                        <ul>
+                            <li>Access your personal information we hold</li>
+                            <li>Request correction of inaccurate data</li>
+                            <li>Request deletion of your personal data</li>
+                            <li>Object to processing of your personal data</li>
+                            <li>Withdraw consent at any time</li>
+                        </ul>
 
-                            <h2>5. Contact Us</h2>
-                            <p class="about-text">
-                                For any privacy-related questions or to exercise your rights, contact us at:
-                                <br><br>
-                                <strong>Email:</strong> info@elitehealthclub.co.za<br>
-                                <strong>Phone:</strong> +27 65 517-2764<br>
-                                <strong>Address:</strong> Level 3 – The Spark Lifestyle Centre, 98 Cannon Avenue, Overport, Durban
-                            </p>
-
-                            <p class="about-text text-muted mt-4">
-                                <small>Last updated: December 2024</small>
-                            </p>
+                        <h2>5. Contact Us</h2>
+                        <p>
+                            For any privacy-related questions or to exercise your rights:
+                        </p>
+                        <div class="contact-info">
+                            <strong>Email:</strong> info@elitehealthclub.co.za<br>
+                            <strong>Phone:</strong> +27 65 517-2764<br>
+                            <strong>Address:</strong> Level 3 – The Spark Lifestyle Centre, 98 Cannon Avenue, Overport, Durban
                         </div>
-                        
-                        <div class="text-center mt-5">
-                            <a href="contact.html" class="btn btn-gold btn-lg me-3">Contact Us</a>
-                            <a href="index.html" class="btn btn-outline-gold btn-lg">Back to Home</a>
-                        </div>
+
+                        <p class="update-notice">
+                            <small>Last updated: December 2024</small>
+                        </p>
+                    </div>
+                    
+                    <div class="text-center mt-5">
+                        <a href="contact.html" class="btn btn-gold btn-lg me-3">Contact Us</a>
+                        <a href="index.html" class="btn btn-outline-gold btn-lg">Back to Home</a>
                     </div>
                 </div>
             </div>
