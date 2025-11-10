@@ -907,3 +907,13 @@ h1, h2, h3, h4, h5, h6 {
     position: relative;
     z-index: 20;
 }
+/* FIX WHITE BACKGROUND WHEN SCROLLING PAST CONTENT */
+html, body {
+    background: #000000 !important;
+    overflow-x: hidden;
+}
+
+/* Ensure no white space below footer */
+body::after {
+    display: none !important;
+}
