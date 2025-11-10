@@ -12,12 +12,152 @@
         .join-hero-section {
             height: 60vh;
             background: linear-gradient(rgba(5, 5, 5, 0.70), transparent), 
-                        url('/images/gym-main.jpg');
+                        url('images/gym-main.jpg');
             background-size: cover;
             background-position: center;
             display: flex;
             align-items: center;
             margin-top: -80px;
+        }
+
+        .membership-plan {
+            background: var(--darker-bg);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            height: 100%;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+            .membership-plan:hover {
+                border-color: var(--gold);
+                transform: translateY(-5px);
+            }
+
+        .plan-title {
+            color: var(--gold);
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .plan-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+            .plan-price span {
+                font-size: 1rem;
+                color: var(--text-muted);
+            }
+
+        .plan-features {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 1.5rem;
+        }
+
+            .plan-features li {
+                padding: 0.5rem 0;
+                color: var(--text-light);
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+                text-align: center;
+            }
+
+                .plan-features li:last-child {
+                    border-bottom: none;
+                }
+
+        .day-pass-card {
+            background: var(--darker-bg);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+            .day-pass-card:hover {
+                border-color: var(--gold);
+                transform: translateY(-5px);
+            }
+
+        .day-pass-price {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin: 1rem 0;
+        }
+
+        /* Operating Hours */
+        .hours-container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .hours-card {
+            background: var(--darker-bg);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
+        }
+
+        .hours-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+            .hours-row:last-child {
+                border-bottom: none;
+            }
+
+            .hours-row.highlight {
+                background: rgba(212, 175, 55, 0.1);
+                margin: 0 -2rem;
+                padding: 1rem 2rem;
+                border-radius: 0 0 13px 13px;
+                border-bottom: none;
+            }
+
+        .hours-day {
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        .hours-time {
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        .joining-fee-notice .notice-card {
+            background: var(--darker-bg);
+            border: 2px solid var(--gold);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .membership-plan {
+                padding: 1.5rem;
+            }
+
+            .plan-price {
+                font-size: 2rem;
+            }
+
+            .hours-row {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
         }
     </style>
 </head>
@@ -25,8 +165,8 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top custom-navbar">
         <div class="container">
-            <a class="navbar-brand" href="/">
-                <img src="/images/elite-logo.png" alt="Elite Health Club" class="logo-img">
+            <a class="navbar-brand" href="index.html">
+                <img src="images/elite-logo.png" alt="Elite Health Club" class="logo-img">
                 <span class="logo-text">ELITE HEALTH CLUB</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -35,16 +175,16 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/">Home</a>
+                        <a class="nav-link" href="index.html">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/join.html">Join</a>
+                        <a class="nav-link" href="join.html">Join</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/about.html">About</a>
+                        <a class="nav-link" href="about.html">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/contact.html">Contact</a>
+                        <a class="nav-link" href="contact.html">Contact</a>
                     </li>
                     <li class="nav-item ms-2">
                         <a class="btn btn-gold" href="https://wa.me/27655172764" target="_blank" rel="noopener noreferrer">Join Now</a>
@@ -71,19 +211,6 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-10">
-                    <!-- Joining Fee Notice -->
-                    <div class="joining-fee-notice text-center mb-5">
-                        <div class="notice-card">
-                            <h4 class="gold-text mb-3">📝 Membership Information</h4>
-                            <p class="text-light mb-2">
-                                <strong>All new members require a <span class="gold-text">R400 Joining Fee</span></strong>
-                            </p>
-                            <p class="text-light small">
-                                Your first payment will be: <strong>R400 Joining Fee + Your Chosen Monthly Rate</strong>
-                            </p>
-                        </div>
-                    </div>
-
                     <h2 class="section-title text-center mb-5">Choose Your Membership</h2>
                     
                     <div class="row">
@@ -184,6 +311,19 @@
                         </div>
                     </div>
 
+                    <!-- R400 Joining Fee Notice -->
+                    <div class="joining-fee-notice text-center mt-5">
+                        <div class="notice-card">
+                            <h4 class="gold-text mb-3">📝 Important Membership Information</h4>
+                            <p class="text-light mb-2">
+                                <strong>All new members require a <span class="gold-text">R400 Joining Fee</span></strong>
+                            </p>
+                            <p class="text-light small mb-0">
+                                Your first payment will be: <strong>R400 Joining Fee + Your Chosen Monthly Rate</strong>
+                            </p>
+                        </div>
+                    </div>
+
                     <!-- Day Pass -->
                     <div class="row justify-content-center mt-4">
                         <div class="col-lg-6">
@@ -277,9 +417,9 @@
                 </div>
                 <div class="col-md-6 text-md-end">
                     <p class="mb-0 small">
-                        <a href="/privacy.html" class="text-gold me-3">Privacy Policy</a>
-                        <a href="/terms.html" class="text-gold me-3">Terms of Service</a>
-                        <span class="text-muted">Site by ThingsDoneImmediately.xyz</span>
+                        <a href="privacy.html" class="text-gold me-3">Privacy Policy</a>
+                        <a href="terms.html" class="text-gold me-3">Terms of Service</a>
+                        <span class="text-muted">Site by www.ThingsDoneImmediately.com</span>
                     </p>
                 </div>
             </div>
