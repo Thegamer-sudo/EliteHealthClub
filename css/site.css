@@ -701,7 +701,25 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     align-items: center;
 }
+/* FIX SOCIAL MEDIA UNDERSCORES - ADD THIS */
+.social-icons a {
+    text-decoration: none !important;
+    border-bottom: none !important;
+}
 
+.social-icons a:hover {
+    text-decoration: none !important;
+    border-bottom: none !important;
+}
+
+/* Also fix all footer links */
+.footer a {
+    text-decoration: none !important;
+}
+
+.footer a:hover {
+    text-decoration: none !important;
+}
 /* Section Backgrounds */
 .bg-dark {
     background: var(--dark-bg) !important;
