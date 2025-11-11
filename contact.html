@@ -18,6 +18,7 @@
             display: flex;
             align-items: center;
             margin-top: -80px;
+            padding-top: 100px;
         }
 
         .contact-info-card {
@@ -29,14 +30,21 @@
             transition: transform 0.3s ease;
         }
 
-            .contact-info-card:hover {
-                transform: translateY(-5px);
-                border-color: var(--gold);
-            }
+        .contact-info-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--gold);
+        }
 
-        .social-links {
-            display: flex;
-            flex-direction: column;
+        .social-icons a {
+            text-decoration: none !important;
+            border-bottom: none !important;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            transform: scale(1.2);
+            color: #fff !important;
         }
 
         .map-placeholder {
@@ -52,7 +60,15 @@
             margin: 0 auto;
         }
 
-        @@media (max-width: 768px) {
+        .connect-center {
+            text-align: center;
+        }
+
+        .social-icons-large {
+            font-size: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
             .social-links .btn {
                 width: 100%;
             }
@@ -113,7 +129,7 @@
                         <div class="col-md-6 mb-4">
                             <div class="contact-info-card">
                                 <h3 class="gold-text mb-4"><i class="fas fa-map-marker-alt me-2"></i>Visit Us</h3>
-                                <p>
+                                <p class="text-light">
                                     <strong>Elite Health Club</strong><br>
                                     Level 3 – The Spark Lifestyle Centre<br>
                                     98 Cannon Avenue, Overport<br>
@@ -125,7 +141,7 @@
                         <div class="col-md-6 mb-4">
                             <div class="contact-info-card">
                                 <h3 class="gold-text mb-4"><i class="fas fa-clock me-2"></i>Operating Hours</h3>
-                                <p>
+                                <p class="text-light">
                                     <strong>Monday - Thursday:</strong> 05:00 - 21:00<br>
                                     <strong>Friday:</strong> 05:00 - 20:00<br>
                                     <strong>Saturday:</strong> 06:00 - 16:00<br>
@@ -136,30 +152,28 @@
                         </div>
                     </div>
 
+                    <!-- Connect With Us - CENTERED -->
                     <div class="row mt-4">
-                        <div class="col-md-6 mb-4">
-                            <div class="contact-info-card">
-                                <h3 class="gold-text mb-4"><i class="fas fa-phone me-2"></i>Call Us</h3>
-                                <p>
-                                    <a href="tel:+27655172764" class="text-gold">+27 65 517-2764</a><br>
-                                    <a href="tel:+27833936085" class="text-gold">+27 83 393-6085</a>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="col-md-6 mb-4">
-                            <div class="contact-info-card">
+                        <div class="col-12">
+                            <div class="contact-info-card connect-center">
                                 <h3 class="gold-text mb-4"><i class="fas fa-share-alt me-2"></i>Connect With Us</h3>
-                                <div class="social-icons">
-                                    <a href="https://www.instagram.com/elitehealthclub/" class="text-gold me-3" target="_blank" rel="noopener noreferrer">
+                                <div class="social-icons social-icons-large">
+                                    <a href="https://www.instagram.com/elitehealthclub/" class="text-gold" target="_blank" rel="noopener noreferrer" title="Instagram">
                                         <i class="fab fa-instagram"></i>
                                     </a>
-                                    <a href="https://www.facebook.com/elitehp/" class="text-gold me-3" target="_blank" rel="noopener noreferrer">
+                                    <a href="https://www.facebook.com/elitehp/" class="text-gold" target="_blank" rel="noopener noreferrer" title="Facebook">
                                         <i class="fab fa-facebook"></i>
                                     </a>
-                                    <a href="https://wa.me/27655172764" class="text-gold" target="_blank" rel="noopener noreferrer">
+                                    <a href="mailto:elitehcdurban@gmail.com" class="text-gold" title="Email">
+                                        <i class="fas fa-envelope"></i>
+                                    </a>
+                                    <a href="https://wa.me/27655172764" class="text-gold" target="_blank" rel="noopener noreferrer" title="WhatsApp">
                                         <i class="fab fa-whatsapp"></i>
                                     </a>
                                 </div>
+                                <p class="text-light mt-3 mb-0">
+                                    <strong>Email:</strong> elitehcdurban@gmail.com
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -220,13 +234,16 @@
                     <h5 class="footer-logo">ELITE HEALTH CLUB</h5>
                     <p class="mb-2">More than a gym — it's a lifestyle.</p>
                     <div class="social-icons">
-                        <a href="https://www.instagram.com/elitehealthclub/" class="text-gold me-3" target="_blank" rel="noopener noreferrer">
+                        <a href="https://www.instagram.com/elitehealthclub/" class="text-gold me-3" target="_blank" rel="noopener noreferrer" title="Instagram">
                             <i class="fab fa-instagram"></i>
                         </a>
-                        <a href="https://www.facebook.com/elitehp/" class="text-gold me-3" target="_blank" rel="noopener noreferrer">
+                        <a href="https://www.facebook.com/elitehp/" class="text-gold me-3" target="_blank" rel="noopener noreferrer" title="Facebook">
                             <i class="fab fa-facebook"></i>
                         </a>
-                        <a href="https://wa.me/27655172764" class="text-gold" target="_blank" rel="noopener noreferrer">
+                        <a href="mailto:elitehcdurban@gmail.com" class="text-gold me-3" title="Email">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                        <a href="https://wa.me/27655172764" class="text-gold" target="_blank" rel="noopener noreferrer" title="WhatsApp">
                             <i class="fab fa-whatsapp"></i>
                         </a>
                     </div>
