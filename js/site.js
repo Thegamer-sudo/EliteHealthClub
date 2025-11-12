@@ -71,3 +71,50 @@ document.addEventListener('DOMContentLoaded', function () {
         document.body.style.opacity = '1';
     }, 100);
 });
+
+// Video Carousel Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const carousel = document.querySelector('.video-carousel');
+    const items = document.querySelectorAll('.video-item');
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
+    const indicators = document.querySelectorAll('.indicator');
+    
+    let currentIndex = 0;
+    
+    function showSlide(index) {
+        // Hide all items
+        items.forEach(item => item.classList.remove('active'));
+        indicators.forEach(indicator => indicator.classList.remove('active'));
+        
+        // Show current item
+        items[index].classList.add('active');
+        indicators[index].classList.add('active');
+        currentIndex = index;
+    }
+    
+    // Next slide
+    nextBtn.addEventListener('click', () => {
+        let nextIndex = (currentIndex + 1) % items.length;
+        showSlide(nextIndex);
+    });
+    
+    // Previous slide
+    prevBtn.addEventListener('click', () => {
+        let prevIndex = (currentIndex - 1 + items.length) % items.length;
+        showSlide(prevIndex);
+    });
+    
+    // Indicator clicks
+    indicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', () => {
+            showSlide(index);
+        });
+    });
+    
+    // Auto-advance (optional)
+    setInterval(() => {
+        let nextIndex = (currentIndex + 1) % items.length;
+        showSlide(nextIndex);
+    }, 8000); // Change every 8 seconds
+});
