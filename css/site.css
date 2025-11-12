@@ -985,50 +985,85 @@ body::after {
 /* Video Carousel Styles */
 .video-carousel-container {
     position: relative;
-    max-width: 800px;
+    max-width: 1200px;
     margin: 0 auto;
+    padding: 0 50px;
 }
 
 .video-carousel {
-    display: flex;
-    overflow: hidden;
-    border-radius: 15px;
-    box-shadow: 0 20px 40px rgba(212, 175, 55, 0.3);
-    background: var(--darker-bg);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    transition: transform 0.5s ease-in-out;
 }
 
 .video-item {
-    min-width: 100%;
-    transition: transform 0.5s ease-in-out;
-    display: none;
+    background: var(--darker-bg);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(212, 175, 55, 0.2);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(212, 175, 55, 0.1);
 }
 
-.video-item.active {
-    display: block;
+.video-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 50px rgba(212, 175, 55, 0.3);
+    border-color: rgba(212, 175, 55, 0.3);
+}
+
+.video-wrapper {
+    position: relative;
+    cursor: pointer;
 }
 
 .training-video {
     width: 100%;
-    height: 400px;
+    height: 250px;
     object-fit: cover;
-    border-radius: 15px 15px 0 0;
+    display: block;
+}
+
+.play-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    transition: all 0.3s ease;
+}
+
+.play-overlay i {
+    font-size: 3rem;
+    color: var(--gold);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.video-wrapper.playing .play-overlay {
+    opacity: 0;
+    pointer-events: none;
 }
 
 .video-caption {
     padding: 1.5rem;
     text-align: center;
     background: var(--dark-bg);
-    border-radius: 0 0 15px 15px;
 }
 
 .carousel-controls {
     position: absolute;
     top: 50%;
-    width: 100%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
     display: flex;
     justify-content: space-between;
-    transform: translateY(-50%);
-    padding: 0 1rem;
+    pointer-events: none;
 }
 
 .carousel-btn {
@@ -1044,6 +1079,8 @@ body::after {
     display: flex;
     align-items: center;
     justify-content: center;
+    pointer-events: all;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 .carousel-btn:hover {
@@ -1051,29 +1088,26 @@ body::after {
     transform: scale(1.1);
 }
 
-.carousel-indicators {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-top: 1.5rem;
-}
-
-.indicator {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: rgba(212, 175, 55, 0.3);
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.indicator.active {
-    background: var(--gold);
-    transform: scale(1.2);
-}
-
-/* Mobile Responsive */
+/* Mobile Styles */
 @media (max-width: 768px) {
+    .video-carousel-container {
+        padding: 0 20px;
+    }
+    
+    .video-carousel {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+    }
+    
+    .video-item {
+        min-width: 85%;
+        scroll-snap-align: center;
+        margin: 0 10px;
+    }
+    
     .training-video {
         height: 300px;
     }
@@ -1084,8 +1118,20 @@ body::after {
         font-size: 1rem;
     }
     
-    .video-caption {
-        padding: 1rem;
+    .carousel-controls {
+        display: none; /* Hide buttons on mobile - use swipe */
+    }
+}
+
+/* Tablet Styles */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .video-carousel {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+    }
+    
+    .training-video {
+        height: 200px;
     }
 }
 
