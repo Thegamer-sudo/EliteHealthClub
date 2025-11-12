@@ -255,7 +255,7 @@
 <section class="py-5 bg-transparent">
     <div class="container">
         <div class="row justify-content-center text-center">
-            <div class="col-lg-10">
+            <div class="col-lg-12">
                 <h2 class="section-title mb-4">Elite Training Experience</h2>
                 <p class="text-light lead mb-5">Professional workouts & techniques</p>
                 
@@ -263,11 +263,16 @@
                 <div class="video-carousel-container">
                     <div class="video-carousel">
                         <!-- Video 1 -->
-                        <div class="video-item active">
-                            <video controls class="training-video">
-                                <source src="videos/workout1.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
+                        <div class="video-item">
+                            <div class="video-wrapper">
+                                <video muted class="training-video" data-video="1">
+                                    <source src="videos/workout1.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <div class="play-overlay">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                            </div>
                             <div class="video-caption">
                                 <h5 class="gold-text">Strength Training</h5>
                                 <p class="text-light">Proper form & technique</p>
@@ -276,10 +281,15 @@
                         
                         <!-- Video 2 -->
                         <div class="video-item">
-                            <video controls class="training-video">
-                                <source src="videos/workout2.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
+                            <div class="video-wrapper">
+                                <video muted class="training-video" data-video="2">
+                                    <source src="videos/workout2.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <div class="play-overlay">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                            </div>
                             <div class="video-caption">
                                 <h5 class="gold-text">Cardio Blast</h5>
                                 <p class="text-light">High-intensity interval training</p>
@@ -288,10 +298,15 @@
                         
                         <!-- Video 3 -->
                         <div class="video-item">
-                            <video controls class="training-video">
-                                <source src="videos/workout3.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
+                            <div class="video-wrapper">
+                                <video muted class="training-video" data-video="3">
+                                    <source src="videos/workout3.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <div class="play-overlay">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                            </div>
                             <div class="video-caption">
                                 <h5 class="gold-text">Flexibility & Recovery</h5>
                                 <p class="text-light">Stretching and cool-down routines</p>
@@ -307,13 +322,6 @@
                         <button class="carousel-btn next-btn">
                             <i class="fas fa-chevron-right"></i>
                         </button>
-                    </div>
-                    
-                    <!-- Indicators -->
-                    <div class="carousel-indicators">
-                        <span class="indicator active" data-slide="0"></span>
-                        <span class="indicator" data-slide="1"></span>
-                        <span class="indicator" data-slide="2"></span>
                     </div>
                 </div>
             </div>
