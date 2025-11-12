@@ -75,46 +75,95 @@ document.addEventListener('DOMContentLoaded', function () {
 // Video Carousel Functionality
 document.addEventListener('DOMContentLoaded', function() {
     const carousel = document.querySelector('.video-carousel');
-    const items = document.querySelectorAll('.video-item');
+    const videos = document.querySelectorAll('.training-video');
+    const videoWrappers = document.querySelectorAll('.video-wrapper');
     const prevBtn = document.querySelector('.prev-btn');
     const nextBtn = document.querySelector('.next-btn');
-    const indicators = document.querySelectorAll('.indicator');
     
-    let currentIndex = 0;
+    let currentVideo = null;
     
-    function showSlide(index) {
-        // Hide all items
-        items.forEach(item => item.classList.remove('active'));
-        indicators.forEach(indicator => indicator.classList.remove('active'));
-        
-        // Show current item
-        items[index].classList.add('active');
-        indicators[index].classList.add('active');
-        currentIndex = index;
+    // Pause all videos except the current one
+    function pauseOtherVideos(currentVideoElement) {
+        videos.forEach(video => {
+            if (video !== currentVideoElement) {
+                video.pause();
+                video.currentTime = 0;
+                video.parentElement.classList.remove('playing');
+            }
+        });
     }
     
-    // Next slide
-    nextBtn.addEventListener('click', () => {
-        let nextIndex = (currentIndex + 1) % items.length;
-        showSlide(nextIndex);
-    });
-    
-    // Previous slide
-    prevBtn.addEventListener('click', () => {
-        let prevIndex = (currentIndex - 1 + items.length) % items.length;
-        showSlide(prevIndex);
-    });
-    
-    // Indicator clicks
-    indicators.forEach((indicator, index) => {
-        indicator.addEventListener('click', () => {
-            showSlide(index);
+    // Video click to play/pause
+    videoWrappers.forEach(wrapper => {
+        const video = wrapper.querySelector('.training-video');
+        
+        wrapper.addEventListener('click', function() {
+            if (video.paused) {
+                // Pause other videos
+                pauseOtherVideos(video);
+                // Play current video
+                video.play();
+                wrapper.classList.add('playing');
+                currentVideo = video;
+            } else {
+                video.pause();
+                wrapper.classList.remove('playing');
+                currentVideo = null;
+            }
+        });
+        
+        // Video ended
+        video.addEventListener('ended', function() {
+            wrapper.classList.remove('playing');
+            currentVideo = null;
         });
     });
     
-    // Auto-advance (optional)
-    setInterval(() => {
-        let nextIndex = (currentIndex + 1) % items.length;
-        showSlide(nextIndex);
-    }, 8000); // Change every 8 seconds
+    // Navigation for mobile/tablet
+    if (window.innerWidth <= 1024) {
+        let startX = 0;
+        let currentScroll = 0;
+        
+        carousel.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+            currentScroll = carousel.scrollLeft;
+        });
+        
+        carousel.addEventListener('touchmove', (e) => {
+            if (!startX) return;
+            const x = e.touches[0].clientX;
+            const walk = (x - startX) * 2;
+            carousel.scrollLeft = currentScroll - walk;
+        });
+        
+        // Button navigation for tablets
+        if (prevBtn && nextBtn) {
+            prevBtn.addEventListener('click', () => {
+                carousel.scrollBy({ left: -300, behavior: 'smooth' });
+            });
+            
+            nextBtn.addEventListener('click', () => {
+                carousel.scrollBy({ left: 300, behavior: 'smooth' });
+            });
+        }
+    }
+    
+    // Auto-pause when video goes out of view (mobile)
+    if (window.innerWidth <= 768) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) {
+                    const video = entry.target.querySelector('.training-video');
+                    if (video && !video.paused) {
+                        video.pause();
+                        video.parentElement.classList.remove('playing');
+                    }
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        document.querySelectorAll('.video-item').forEach(item => {
+            observer.observe(item);
+        });
+    }
 });
