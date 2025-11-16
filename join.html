@@ -212,147 +212,162 @@
     </section>
 
     <!-- Membership Plans Section -->
-    <section class="py-4 bg-transparent">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-10">
-                    <h2 class="section-title text-center mb-4">Choose Your Membership</h2>
+<section class="py-4 bg-transparent">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <h2 class="section-title text-center mb-4">Choose Your Membership</h2>
+                
+                <!-- New Booking Info -->
+                <div class="text-center mb-4">
+                    <div class="alert alert-info" style="background: rgba(212, 175, 55, 0.1); border: 1px solid var(--gold); color: var(--text-light);">
+                        <i class="fas fa-info-circle me-2"></i>
+                        <strong>Visit First, Pay Later:</strong> Book a gym tour and see our premium facilities before committing
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <!-- General Membership -->
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="membership-plan">
+                            <h3 class="plan-title">GENERAL</h3>
+                            <div class="plan-price">R350<span>/month</span></div>
+                            <ul class="plan-features">
+                                <li>Full gym access</li>
+                                <li>All equipment included</li>
+                                <li>Locker room facilities</li>
+                                <li>Free parking</li>
+                            </ul>
+                            <button class="btn btn-outline-gold w-100" onclick="eliteChatbot.handlePackageSelection('GENERAL')">
+                                Choose General
+                            </button>
+                        </div>
+                    </div>
                     
-                    <div class="row">
-                        <!-- General Membership -->
-                        <div class="col-md-6 col-lg-4 mb-4">
-                            <div class="membership-plan">
-                                <h3 class="plan-title">GENERAL</h3>
-                                <div class="plan-price">R350<span>/month</span></div>
-                                <ul class="plan-features">
-                                    <li>Full gym access</li>
-                                    <li>All equipment included</li>
-                                    <li>Locker room facilities</li>
-                                    <li>Free parking</li>
-                                </ul>
-                                <a href="https://wa.me/27655172764?text=Hi! I'm interested in the GENERAL membership (R350/month)" 
-                                   class="btn btn-outline-gold w-100" target="_blank" rel="noopener noreferrer">Choose General</a>
-                            </div>
+                    <!-- Debit Membership -->
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="membership-plan">
+                            <h3 class="plan-title">DEBIT ORDER</h3>
+                            <div class="plan-price">R250<span>/month</span></div>
+                            <ul class="plan-features">
+                                <li>All General benefits</li>
+                                <li>Convenient monthly debit</li>
+                                <li>No price increases</li>
+                                <li>Easy cancellation</li>
+                            </ul>
+                            <button class="btn btn-outline-gold w-100" onclick="eliteChatbot.handlePackageSelection('DEBIT ORDER')">
+                                Choose Debit
+                            </button>
                         </div>
-                        
-                        <!-- Debit Membership -->
-                        <div class="col-md-6 col-lg-4 mb-4">
-                            <div class="membership-plan">
-                                <h3 class="plan-title">DEBIT ORDER</h3>
-                                <div class="plan-price">R250<span>/month</span></div>
-                                <ul class="plan-features">
-                                    <li>All General benefits</li>
-                                    <li>Convenient monthly debit</li>
-                                    <li>No price increases</li>
-                                    <li>Easy cancellation</li>
-                                </ul>
-                                <a href="https://wa.me/27655172764?text=Hi! I'm interested in the DEBIT membership (R250/month)" 
-                                   class="btn btn-outline-gold w-100" target="_blank" rel="noopener noreferrer">Choose Debit</a>
-                            </div>
-                        </div>
-                        
-                        <!-- Student Membership -->
-                        <div class="col-md-6 col-lg-4 mb-4">
-                            <div class="membership-plan">
-                                <h3 class="plan-title">STUDENT</h3>
-                                <div class="plan-price">R200<span>/month</span></div>
-                                <ul class="plan-features">
-                                    <li>Special student pricing</li>
-                                    <li>Debit order available</li>
-                                    <li>Valid student ID required</li>
-                                    <li>All gym access included</li>
-                                </ul>
-                                <a href="https://wa.me/27655172764?text=Hi! I'm interested in the STUDENT membership (R200/month)" 
-                                   class="btn btn-outline-gold w-100" target="_blank" rel="noopener noreferrer">Choose Student</a>
-                            </div>
-                        </div>
-
-                        <!-- Pensioner Membership -->
-                        <div class="col-md-6 col-lg-4 mb-4">
-                            <div class="membership-plan">
-                                <h3 class="plan-title">PENSIONER</h3>
-                                <div class="plan-price">R250<span>/month</span></div>
-                                <ul class="plan-features">
-                                    <li>Special pensioner rate</li>
-                                    <li>General membership benefits</li>
-                                    <li>Peaceful training environment</li>
-                                    <li>Senior-friendly equipment</li>
-                                </ul>
-                                <a href="https://wa.me/27655172764?text=Hi! I'm interested in the PENSIONER membership (R250/month)" 
-                                   class="btn btn-outline-gold w-100" target="_blank" rel="noopener noreferrer">Choose Pensioner</a>
-                            </div>
-                        </div>
-
-                        <!-- 6 Month Package -->
-                        <div class="col-md-6 col-lg-4 mb-4">
-                            <div class="membership-plan">
-                                <h3 class="plan-title">6 MONTH PACKAGE</h3>
-                                <div class="plan-price">R1,500<span>/once off</span></div>
-                                <ul class="plan-features">
-                                    <li>6 months full access</li>
-                                    <li>Save R300 total</li>
-                                    <li>No monthly payments</li>
-                                    <li>Perfect commitment package</li>
-                                </ul>
-                                <a href="https://wa.me/27655172764?text=Hi! I'm interested in the 6 MONTH PACKAGE (R1500 once off)" 
-                                   class="btn btn-outline-gold w-100" target="_blank" rel="noopener noreferrer">Choose 6 Months</a>
-                            </div>
-                        </div>
-
-                        <!-- Family Membership -->
-                        <div class="col-md-6 col-lg-4 mb-4">
-                            <div class="membership-plan">
-                                <h3 class="plan-title">FAMILY PACKAGE</h3>
-                                <div class="plan-price">R800<span>/month</span></div>
-                                <ul class="plan-features">
-                                    <li>Minimum 4 family members</li>
-                                    <li>Massive family savings</li>
-                                    <li>All individual benefits</li>
-                                    <li>Perfect for households</li>
-                                </ul>
-                                <a href="https://wa.me/27655172764?text=Hi! I'm interested in the FAMILY PACKAGE (R800/month for 4+ members)" 
-                                   class="btn btn-outline-gold w-100" target="_blank" rel="noopener noreferrer">Choose Family</a>
-                            </div>
+                    </div>
+                    
+                    <!-- Student Membership -->
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="membership-plan">
+                            <h3 class="plan-title">STUDENT</h3>
+                            <div class="plan-price">R200<span>/month</span></div>
+                            <ul class="plan-features">
+                                <li>Special student pricing</li>
+                                <li>Debit order available</li>
+                                <li>Valid student ID required</li>
+                                <li>All gym access included</li>
+                            </ul>
+                            <button class="btn btn-outline-gold w-100" onclick="eliteChatbot.handlePackageSelection('STUDENT')">
+                                Choose Student
+                            </button>
                         </div>
                     </div>
 
-                    <!-- R400 Joining Fee Notice -->
-                    <div class="joining-fee-notice text-center mt-4">
-                        <div class="notice-card">
-                            <h4 class="gold-text mb-3">📝 Important Membership Information</h4>
-                            <p class="text-light mb-2">
-                                <strong>All new members require a <span class="gold-text">R400 Joining Fee</span></strong>
-                            </p>
-                            <p class="text-light small mb-0">
-                                Your first payment will be: <strong>R400 Joining Fee + Your Chosen Monthly Rate</strong>
-                            </p>
+                    <!-- Pensioner Membership -->
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="membership-plan">
+                            <h3 class="plan-title">PENSIONER</h3>
+                            <div class="plan-price">R250<span>/month</span></div>
+                            <ul class="plan-features">
+                                <li>Special pensioner rate</li>
+                                <li>General membership benefits</li>
+                                <li>Peaceful training environment</li>
+                                <li>Senior-friendly equipment</li>
+                            </ul>
+                            <button class="btn btn-outline-gold w-100" onclick="eliteChatbot.handlePackageSelection('PENSIONER')">
+                                Choose Pensioner
+                            </button>
                         </div>
                     </div>
 
-                    <!-- Day Pass -->
-                    <div class="row justify-content-center mt-4">
-                        <div class="col-lg-6">
-                            <div class="day-pass-card text-center">
-                                <h3 class="gold-text">DAY PASS</h3>
-                                <div class="day-pass-price">R50</div>
-                                <p class="text-light">Try our facilities for a day</p>
-                                <a href="https://wa.me/27655172764?text=Hi! I'm interested in a DAY PASS (R50)" 
-                                   class="btn btn-outline-gold" target="_blank" rel="noopener noreferrer">Get Day Pass</a>
-                            </div>
+                    <!-- 6 Month Package -->
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="membership-plan">
+                            <h3 class="plan-title">6 MONTH PACKAGE</h3>
+                            <div class="plan-price">R1,500<span>/once off</span></div>
+                            <ul class="plan-features">
+                                <li>6 months full access</li>
+                                <li>Save R300 total</li>
+                                <li>No monthly payments</li>
+                                <li>Perfect commitment package</li>
+                            </ul>
+                            <button class="btn btn-outline-gold w-100" onclick="eliteChatbot.handlePackageSelection('6 MONTH PACKAGE')">
+                                Choose 6 Months
+                            </button>
                         </div>
                     </div>
 
-                    <!-- Small discreet notice -->
-                    <div class="text-center mt-4">
-                        <p class="text-muted small">
-                            <i class="fas fa-info-circle me-1"></i>
-                            All memberships subject to standard terms and conditions
+                    <!-- Family Membership -->
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="membership-plan">
+                            <h3 class="plan-title">FAMILY PACKAGE</h3>
+                            <div class="plan-price">R800<span>/month</span></div>
+                            <ul class="plan-features">
+                                <li>Minimum 4 family members</li>
+                                <li>Massive family savings</li>
+                                <li>All individual benefits</li>
+                                <li>Perfect for households</li>
+                            </ul>
+                            <button class="btn btn-outline-gold w-100" onclick="eliteChatbot.handlePackageSelection('FAMILY PACKAGE')">
+                                Choose Family
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- R400 Joining Fee Notice -->
+                <div class="joining-fee-notice text-center mt-4">
+                    <div class="notice-card">
+                        <h4 class="gold-text mb-3">📝 Important Membership Information</h4>
+                        <p class="text-light mb-2">
+                            <strong>All new members require a <span class="gold-text">R400 Joining Fee</span></strong>
+                        </p>
+                        <p class="text-light small mb-0">
+                            Your first payment will be: <strong>R400 Joining Fee + Your Chosen Monthly Rate</strong>
                         </p>
                     </div>
                 </div>
+
+                <!-- Day Pass -->
+                <div class="row justify-content-center mt-4">
+                    <div class="col-lg-6">
+                        <div class="day-pass-card text-center">
+                            <h3 class="gold-text">DAY PASS</h3>
+                            <div class="day-pass-price">R50</div>
+                            <p class="text-light">Try our facilities for a day</p>
+                            <button class="btn btn-outline-gold" onclick="eliteChatbot.handlePackageSelection('DAY PASS')">
+                                Get Day Pass
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Small discreet notice -->
+                <div class="text-center mt-4">
+                    <p class="text-muted small">
+                        <i class="fas fa-info-circle me-1"></i>
+                        All memberships subject to standard terms and conditions
+                    </p>
+                </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- Operating Hours Section -->
     <section class="py-4 bg-transparent">
