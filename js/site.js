@@ -168,8 +168,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-
-// ===== ELITE CHATBOT - MOBILE OPTIMIZED =====
+//CHAT BOT................................................................................................................................................
+// ===== ELITE CHATBOT - PREMIUM VERSION =====
 class EliteChatbot {
     constructor() {
         this.userData = {
@@ -179,12 +179,13 @@ class EliteChatbot {
         };
         this.currentStep = 'welcome';
         this.isMobile = this.checkMobile();
+        this.messageCount = 0; // Prevent double messages
         this.init();
     }
 
     init() {
         this.setupEventListeners();
-        console.log('Elite Chatbot initialized - Mobile:', this.isMobile);
+        console.log('Elite Chatbot initialized');
     }
 
     checkMobile() {
@@ -202,7 +203,7 @@ class EliteChatbot {
             this.closeChat();
         });
 
-        // Send message
+        // Send message on button click
         document.getElementById('chatbot-send').addEventListener('click', () => {
             this.sendMessage();
         });
@@ -214,24 +215,14 @@ class EliteChatbot {
             }
         });
 
-        // Package selection from join page - FIXED FOR MOBILE
+        // Package selection from join page
         document.addEventListener('click', (e) => {
             if (e.target.closest('.membership-plan .btn')) {
                 const planElement = e.target.closest('.membership-plan');
-                const planTitle = planElement.querySelector('.plan-title').textContent;
+                const planTitle = planElement.querySelector('.plan-title').textContent.trim();
                 this.handlePackageSelection(planTitle);
-                
-                // PREVENT DEFAULT BEHAVIOR
                 e.preventDefault();
-                e.stopPropagation();
                 return false;
-            }
-        });
-
-        // Hide keyboard when clicking outside input
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.chatbot-input') && !e.target.closest('#chatbot-input')) {
-                this.hideKeyboard();
             }
         });
     }
@@ -243,12 +234,10 @@ class EliteChatbot {
         container.style.display = isOpening ? 'flex' : 'none';
         
         if (isOpening) {
-            // Don't auto-focus on mobile to prevent keyboard popup
             if (!this.isMobile) {
                 document.getElementById('chatbot-input').focus();
             }
-            // If opening fresh (not from package click), show welcome
-            if (!this.userData.selectedPackage) {
+            if (!this.userData.selectedPackage && this.messageCount === 0) {
                 this.showWelcomeMessage();
             }
         } else {
@@ -269,7 +258,6 @@ class EliteChatbot {
         const inputArea = document.querySelector('.chatbot-input');
         if (show) {
             inputArea.classList.add('active');
-            // Only focus on desktop to avoid mobile keyboard popup
             if (!this.isMobile) {
                 setTimeout(() => {
                     document.getElementById('chatbot-input').focus();
@@ -281,84 +269,77 @@ class EliteChatbot {
         }
     }
 
-    // FIXED: Handle package selection with FORCE OPEN on mobile
     handlePackageSelection(packageName) {
         console.log('Package selected:', packageName);
         
         this.userData.selectedPackage = packageName;
+        this.messageCount = 0; // Reset message count
         
-        // FORCE OPEN CHATBOT - ESPECIALLY ON MOBILE
         const container = document.getElementById('chatbot-container');
         container.style.display = 'flex';
         
-        // Clear any existing messages
+        // Clear existing messages
         document.getElementById('chatbot-messages').innerHTML = '';
         this.clearQuickActions();
         
-        // Small delay to ensure chatbot is open
         setTimeout(() => {
             this.showPackageConfirmation();
         }, 100);
     }
 
-    // FLOW 1: Welcome (Standalone chatbot)
+    // FIXED: No double messages
     showWelcomeMessage() {
+        this.messageCount++;
         this.addMessage('bot', `Hi! I'm Elite Assistant! 🏋️‍♂️\nWhat can I help you with today?`);
         this.showQuickActions(['Choose Membership Package', 'Ask Questions', 'Book Gym Tour']);
         this.currentStep = 'welcome';
-        this.showInput(false); // Hide input initially
+        this.showInput(false);
     }
 
-    // FLOW 2: Package already selected (from join page)
+    // FIXED: Single message flow
     showPackageConfirmation() {
+        this.messageCount++;
         const priceInfo = this.getPackagePrice(this.userData.selectedPackage);
         
-        this.addMessage('bot', `🎯 **Great Choice!**\n\nYou selected: **${this.userData.selectedPackage}**\n\n${priceInfo}\n\n*Includes full gym access & premium facilities*`);
+        this.addMessage('bot', `🎯 **Great Choice!**\n\nYou selected: **${this.userData.selectedPackage}**\n\n${priceInfo}\n\nReady to book your gym tour?`);
         
-        setTimeout(() => {
-            this.addMessage('bot', `Ready to book your gym tour and proceed with this plan?`);
-            
-            this.showActionButtons([
-                { 
-                    text: '✅ Yes, Book Tour & Continue', 
-                    action: () => this.startBookingFlow() 
-                },
-                { 
-                    text: '🔄 Choose Different Plan', 
-                    action: () => this.showPackageSelection() 
-                }
-            ]);
-        }, 800);
+        this.showActionButtons([
+            { 
+                text: '✅ Yes, Book Tour', 
+                action: () => this.startBookingFlow() 
+            },
+            { 
+                text: '🔄 Choose Different Plan', 
+                action: () => this.showPackageSelection() 
+            }
+        ]);
         
         this.currentStep = 'package_confirmation';
         this.showInput(false);
     }
 
-    // Package selection inside chatbot
     showPackageSelection() {
         this.userData.selectedPackage = null;
-        this.addMessage('bot', `📋 **Choose Your Membership Package:**\n\nSelect the plan that fits your goals:`);
+        this.addMessage('bot', `📋 **Choose Your Membership Package:**`);
         
         const packages = [
-            { name: 'GENERAL', price: 'R350/month', desc: 'Full gym access' },
-            { name: 'STUDENT', price: 'R200/month', desc: 'Student discount' },
-            { name: 'DEBIT ORDER', price: 'R250/month', desc: 'Monthly debit' },
-            { name: 'PENSIONER', price: 'R250/month', desc: 'Senior rate' },
-            { name: '6 MONTH PACKAGE', price: 'R1,500 once-off', desc: 'Best value' },
-            { name: 'FAMILY PACKAGE', price: 'R800/month', desc: '4+ members' }
+            { name: 'GENERAL', price: 'R350/month' },
+            { name: 'STUDENT', price: 'R200/month' },
+            { name: 'DEBIT ORDER', price: 'R250/month' },
+            { name: 'PENSIONER', price: 'R250/month' },
+            { name: '6 MONTH PACKAGE', price: 'R1,500 once-off' },
+            { name: 'FAMILY PACKAGE', price: 'R800/month' }
         ];
         
         this.showActionButtons(packages.map(pkg => ({
-            text: `${pkg.name}\n${pkg.price} • ${pkg.desc}`,
+            text: `${pkg.name} - ${pkg.price}`,
             action: () => this.selectPackageInChat(pkg.name)
         })));
-        
-        this.showInput(false);
     }
 
     selectPackageInChat(packageName) {
         this.userData.selectedPackage = packageName;
-        this.addMessage('user', `I choose ${packageName}`);
+        this.addMessage('user', `${packageName}`);
         this.showPackageConfirmation();
     }
 
@@ -368,18 +349,17 @@ class EliteChatbot {
             'GENERAL': '💰 **First Payment:** R750\n(R350/month + R400 joining fee)',
             'DEBIT ORDER': '💰 **First Payment:** R650\n(R250/month + R400 joining fee)',
             'PENSIONER': '💰 **First Payment:** R650\n(R250/month + R400 joining fee)',
-            '6 MONTH PACKAGE': '💰 **Total:** R1,500\n(6 months access - no joining fee)',
+            '6 MONTH PACKAGE': '💰 **Total:** R1,500\n(6 months - no joining fee)',
             'FAMILY PACKAGE': '💰 **First Payment:** R1,200\n(R800/month + R400 joining fee)',
-            'DAY PASS': '💰 **Day Pass:** R50\n(Single day access)'
+            'DAY PASS': '💰 **Day Pass:** R50'
         };
         
         return prices[packageName] || 'Contact for pricing';
     }
 
-    // SIMPLIFIED Booking flow - NO EMAIL
     startBookingFlow() {
-        this.addMessage('user', 'Yes, book tour and continue');
-        this.addMessage('bot', `🎉 **Perfect!** Let's get you booked for a tour.`);
+        this.addMessage('user', 'Yes, book tour');
+        this.addMessage('bot', `🎉 **Perfect!** Let's get you booked.`);
         
         setTimeout(() => {
             this.askForName();
@@ -388,22 +368,22 @@ class EliteChatbot {
 
     askForName() {
         setTimeout(() => {
-            this.addMessage('bot', `👤 **What's your full name?**\n\n*We'll use this for your booking confirmation*`);
+            this.addMessage('bot', `👤 **What's your full name?**`);
             this.currentStep = 'awaiting_name';
             this.clearQuickActions();
-            this.showInput(true); // Show input for name
+            this.showInput(true);
         }, 800);
     }
 
     askForTourTime() {
         setTimeout(() => {
-            this.addMessage('bot', `🕒 **Choose Your Preferred Tour Time:**\n\nSelect when you'd like to visit us:`);
+            this.addMessage('bot', `🕒 **Choose tour time:**`);
             
             const tourTimes = [
-                { time: '🌅 Morning Tour\nMon-Fri: 5:00 AM - 12:00 PM', type: 'Morning' },
-                { time: '☀️ Afternoon Tour\nMon-Fri: 12:00 PM - 5:00 PM', type: 'Afternoon' },
-                { time: '🌙 Evening Tour\nMon-Thu: 5:00 PM - 9:00 PM', type: 'Evening' },
-                { time: '📅 Weekend Tour\nSat: 6AM-4PM • Sun: 6AM-2PM', type: 'Weekend' }
+                { time: '🌅 Morning (Mon-Fri: 5AM-12PM)', type: 'Morning' },
+                { time: '☀️ Afternoon (Mon-Fri: 12PM-5PM)', type: 'Afternoon' },
+                { time: '🌙 Evening (Mon-Thu: 5PM-9PM)', type: 'Evening' },
+                { time: '📅 Weekend (Sat 6AM-4PM, Sun 6AM-2PM)', type: 'Weekend' }
             ];
             
             this.showActionButtons(tourTimes.map(tour => ({
@@ -418,13 +398,13 @@ class EliteChatbot {
 
     selectTourTime(tourTime) {
         this.userData.tourTime = tourTime;
-        this.addMessage('user', `I choose ${tourTime} tour`);
+        this.addMessage('user', `${tourTime} tour`);
         this.showBookingSummary();
     }
 
     showBookingSummary() {
         setTimeout(() => {
-            this.addMessage('bot', `✅ **Booking Confirmed!**\n\nHere's your tour booking summary:`);
+            this.addMessage('bot', `✅ **Booking Confirmed!**`);
             
             const summaryHTML = `
                 <div class="booking-summary">
@@ -440,24 +420,15 @@ class EliteChatbot {
                         <span class="summary-label">Tour Time:</span>
                         <span class="summary-value">${this.userData.tourTime}</span>
                     </div>
-                    <div class="summary-item">
-                        <span class="summary-label">Location:</span>
-                        <span class="summary-value">Spark Lifestyle Centre</span>
-                    </div>
-                    <div class="summary-item">
-                        <span class="summary-label">Address:</span>
-                        <span class="summary-value">98 Cannon Ave, Overport</span>
-                    </div>
                 </div>
             `;
             
-            // Create a temporary div to insert HTML
             const tempDiv = document.createElement('div');
             tempDiv.innerHTML = summaryHTML;
             document.getElementById('chatbot-messages').appendChild(tempDiv);
             
             setTimeout(() => {
-                this.addMessage('bot', `📱 **Ready to send this to our team?**\n\nWe'll create a WhatsApp message with your booking details.`);
+                this.addMessage('bot', `📱 **Ready to send to WhatsApp?**`);
                 
                 this.showActionButtons([
                     { 
@@ -470,8 +441,6 @@ class EliteChatbot {
                     }
                 ]);
             }, 1000);
-            
-            this.showInput(false);
         }, 800);
     }
 
@@ -480,7 +449,7 @@ class EliteChatbot {
         const encodedMessage = encodeURIComponent(message);
         
         this.addMessage('user', 'Send via WhatsApp');
-        this.addMessage('bot', `📲 **Opening WhatsApp...**\n\nYour booking details are ready to send!`);
+        this.addMessage('bot', `📲 **Opening WhatsApp...**`);
         
         setTimeout(() => {
             window.open(`https://wa.me/27655172764?text=${encodedMessage}`, '_blank');
@@ -512,15 +481,16 @@ Please confirm my booking!`;
             selectedPackage: null,
             tourTime: null
         };
+        this.messageCount = 0;
         this.currentStep = 'welcome';
         
         setTimeout(() => {
-            this.addMessage('bot', `💪 **Is there anything else I can help you with?**`);
+            this.addMessage('bot', `💪 **Anything else I can help with?**`);
             this.showQuickActions(['Choose Membership Package', 'Ask Questions', 'Book Gym Tour']);
         }, 2000);
     }
 
-    // Handle user input
+    // FIXED: Send message with button
     sendMessage() {
         const input = document.getElementById('chatbot-input');
         const message = input.value.trim();
@@ -536,36 +506,37 @@ Please confirm my booking!`;
         switch(this.currentStep) {
             case 'awaiting_name':
                 this.userData.name = message;
-                this.showInput(false); // Hide input after name
+                this.showInput(false);
                 this.askForTourTime();
                 break;
                 
             default:
-                this.handleGeneralMessage(message);
+                this.handleAIResponse(message);
                 break;
         }
     }
 
-    handleGeneralMessage(message) {
+    // 🤖 SIMPLE AI RESPONSES
+    handleAIResponse(message) {
         const lowerMessage = message.toLowerCase();
         
         if (lowerMessage.includes('hello') || lowerMessage.includes('hi')) {
-            this.addMessage('bot', '👋 **Hello!** Welcome to Elite Health Club!\n\nHow can I help you today? 🏋️‍♂️');
-        } else if (lowerMessage.includes('package') || lowerMessage.includes('membership')) {
-            this.showPackageSelection();
-        } else if (lowerMessage.includes('tour') || lowerMessage.includes('book') || lowerMessage.includes('visit')) {
-            this.userData.selectedPackage = 'General';
-            this.startBookingFlow();
-        } else if (lowerMessage.includes('hour') || lowerMessage.includes('open')) {
-            this.addMessage('bot', `🕒 **Operating Hours:**\n\n• Mon-Thu: 5:00 AM - 9:00 PM\n• Friday: 5:00 AM - 8:00 PM\n• Saturday: 6:00 AM - 4:00 PM\n• Sunday: 6:00 AM - 2:00 PM\n• Public Holidays: 6:00 AM - 2:00 PM`);
+            this.addMessage('bot', '👋 **Hello!** Welcome to Elite Health Club! 🏋️‍♂️');
         } else if (lowerMessage.includes('price') || lowerMessage.includes('cost')) {
-            this.addMessage('bot', `💰 **Membership Pricing:**\n\n• Student: R200/month\n• General: R350/month  \n• Debit: R250/month\n• Pensioner: R250/month\n• 6-Month: R1,500 once-off\n• Family: R800/month\n\n➕ R400 joining fee for all new members`);
+            this.addMessage('bot', `💰 **Membership Pricing:**\n\n• Student: R200/month\n• General: R350/month  \n• Debit: R250/month\n• Pensioner: R250/month\n• 6-Month: R1,500 once-off\n• Family: R800/month\n\n➕ R400 joining fee for new members`);
+        } else if (lowerMessage.includes('hour') || lowerMessage.includes('open')) {
+            this.addMessage('bot', `🕒 **Operating Hours:**\n\n• Mon-Thu: 5:00 AM - 9:00 PM\n• Friday: 5:00 AM - 8:00 PM\n• Saturday: 6:00 AM - 4:00 PM\n• Sunday: 6:00 AM - 2:00 PM`);
         } else if (lowerMessage.includes('where') || lowerMessage.includes('location')) {
-            this.addMessage('bot', `📍 **Location:**\n\nElite Health Club\nLevel 3 – The Spark Lifestyle Centre\n98 Cannon Avenue, Overport\nDurban, South Africa\n\nEasy to find! 🗺️`);
+            this.addMessage('bot', `📍 **Location:**\n\nElite Health Club\nLevel 3 – The Spark Lifestyle Centre\n98 Cannon Avenue, Overport\nDurban`);
+        } else if (lowerMessage.includes('trainer') || lowerMessage.includes('coach')) {
+            this.addMessage('bot', `💪 **Our Trainers:**\n\nWe have certified trainers to help you reach your fitness goals! They can create personalized workout plans and provide guidance.`);
+        } else if (lowerMessage.includes('equipment') || lowerMessage.includes('machine')) {
+            this.addMessage('bot', `🏋️ **Equipment:**\n\nWe have state-of-the-art equipment:\n• Cardio machines\n• Weight training\n• Functional training area\n• Free weights\n• And more!`);
         } else {
-            this.addMessage('bot', `🤔 **I'm here to help!**\n\nYou can ask me about:\n• Membership packages & pricing\n• Booking gym tours  \n• Operating hours\n• Location & facilities\n\nOr use the buttons below! 💪`);
-            this.showQuickActions(['Choose Membership Package', 'Ask Questions', 'Book Gym Tour']);
+            this.addMessage('bot', `🤔 I'm here to help with memberships, tours, and gym info! Try asking about pricing, hours, or book a tour. 💪`);
         }
+        
+        this.showQuickActions(['Choose Membership Package', 'Ask Questions', 'Book Gym Tour']);
     }
 
     // UI Helpers
@@ -605,8 +576,6 @@ Please confirm my booking!`;
             button.onclick = item.action;
             actionsContainer.appendChild(button);
         });
-        
-        this.showInput(false);
     }
 
     clearQuickActions() {
@@ -620,7 +589,7 @@ Please confirm my booking!`;
                 break;
             case 'Ask Questions':
                 this.addMessage('user', 'I have questions');
-                this.addMessage('bot', `❓ **Ask me anything!**\n\nI can help with:\n• Membership information\n• Pricing & packages\n• Operating hours\n• Location & facilities\n• Booking process\n\nWhat would you like to know?`);
+                this.addMessage('bot', `❓ **Ask me anything!**\n\nI can help with:\n• Membership & pricing\n• Operating hours\n• Location & facilities\n• Booking tours\n\nWhat would you like to know?`);
                 this.showInput(true);
                 break;
             case 'Book Gym Tour':
@@ -639,15 +608,13 @@ Please confirm my booking!`;
         messagesContainer.appendChild(messageDiv);
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
         
-        // Clear quick actions after user message
         if (sender === 'user') {
             this.clearQuickActions();
         }
     }
 }
 
-// Initialize chatbot when page loads
+// Initialize chatbot
 document.addEventListener('DOMContentLoaded', function() {
     window.eliteChatbot = new EliteChatbot();
 });
-// ===== END CHATBOT =====
