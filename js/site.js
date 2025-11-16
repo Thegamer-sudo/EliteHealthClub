@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 //CHAT BOT................................................................................................................................................
-// ===== ELITE CHATBOT - PREMIUM VERSION =====
+// ===== ELITE CHATBOT - FIXED DOUBLE MESSAGES =====
 class EliteChatbot {
     constructor() {
         this.userData = {
@@ -179,7 +179,6 @@ class EliteChatbot {
         };
         this.currentStep = 'welcome';
         this.isMobile = this.checkMobile();
-        this.messageCount = 0; // Prevent double messages
         this.init();
     }
 
@@ -237,7 +236,7 @@ class EliteChatbot {
             if (!this.isMobile) {
                 document.getElementById('chatbot-input').focus();
             }
-            if (!this.userData.selectedPackage && this.messageCount === 0) {
+            if (!this.userData.selectedPackage) {
                 this.showWelcomeMessage();
             }
         } else {
@@ -273,7 +272,6 @@ class EliteChatbot {
         console.log('Package selected:', packageName);
         
         this.userData.selectedPackage = packageName;
-        this.messageCount = 0; // Reset message count
         
         const container = document.getElementById('chatbot-container');
         container.style.display = 'flex';
@@ -287,20 +285,19 @@ class EliteChatbot {
         }, 100);
     }
 
-    // FIXED: No double messages
+    // FIXED: Single welcome message
     showWelcomeMessage() {
-        this.messageCount++;
         this.addMessage('bot', `Hi! I'm Elite Assistant! 🏋️‍♂️\nWhat can I help you with today?`);
         this.showQuickActions(['Choose Membership Package', 'Ask Questions', 'Book Gym Tour']);
         this.currentStep = 'welcome';
         this.showInput(false);
     }
 
-    // FIXED: Single message flow
+    // FIXED: SINGLE MESSAGE - No more double messages!
     showPackageConfirmation() {
-        this.messageCount++;
         const priceInfo = this.getPackagePrice(this.userData.selectedPackage);
         
+        // SINGLE MESSAGE - No more double messages!
         this.addMessage('bot', `🎯 **Great Choice!**\n\nYou selected: **${this.userData.selectedPackage}**\n\n${priceInfo}\n\nReady to book your gym tour?`);
         
         this.showActionButtons([
@@ -481,7 +478,6 @@ Please confirm my booking!`;
             selectedPackage: null,
             tourTime: null
         };
-        this.messageCount = 0;
         this.currentStep = 'welcome';
         
         setTimeout(() => {
@@ -490,7 +486,7 @@ Please confirm my booking!`;
         }, 2000);
     }
 
-    // FIXED: Send message with button
+    // Send message with button
     sendMessage() {
         const input = document.getElementById('chatbot-input');
         const message = input.value.trim();
@@ -516,7 +512,7 @@ Please confirm my booking!`;
         }
     }
 
-    // 🤖 SIMPLE AI RESPONSES
+    // AI RESPONSES
     handleAIResponse(message) {
         const lowerMessage = message.toLowerCase();
         
@@ -561,17 +557,7 @@ Please confirm my booking!`;
         
         actions.forEach(item => {
             const button = document.createElement('button');
-            const isPackage = item.text.includes('GENERAL') || item.text.includes('STUDENT') || item.text.includes('DEBIT') || item.text.includes('PENSIONER') || item.text.includes('6 MONTH') || item.text.includes('FAMILY');
-            const isBooking = item.text.includes('Tour') || item.text.includes('Morning') || item.text.includes('Afternoon') || item.text.includes('Evening') || item.text.includes('Weekend');
-            
-            if (isPackage) {
-                button.className = 'quick-action package-option';
-            } else if (isBooking) {
-                button.className = 'quick-action booking-option';
-            } else {
-                button.className = 'quick-action';
-            }
-            
+            button.className = 'quick-action';
             button.innerHTML = item.text.replace(/\n/g, '<br>');
             button.onclick = item.action;
             actionsContainer.appendChild(button);
