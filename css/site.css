@@ -1520,20 +1520,56 @@ body::after {
 }
 /* ===== END CHATBOT STYLES ===== */
 
-/* ===== FIXED SPACING & JOURNEY STEPS ===== */
+/* ===== RESPONSIVE SPACING - MOBILE vs DESKTOP ===== */
 
-/* REDUCE GAP BETWEEN HERO AND CYLINDER SECTION */
+/* DEFAULT SPACING (Good for mobile) */
 .hero-section {
     padding-bottom: 1rem !important;
     margin-bottom: 0 !important;
 }
 
 .cylinder-section {
-    margin-top: -4rem !important;
+    margin-top: -2rem !important; /* Closer on mobile */
     padding-top: 0 !important;
 }
 
-/* COMPACT JOURNEY STEPS - FIXED SPACING */
+.membership-invite {
+    margin-top: -1rem !important; /* Closer on mobile */
+    padding-top: 0 !important;
+    padding-bottom: 1rem !important;
+}
+
+.journey-section {
+    margin-top: -1rem !important; /* Closer on mobile */
+    padding-top: 0 !important;
+    padding-bottom: 1rem !important;
+}
+
+/* DESKTOP SPACING - More breathing room */
+@media (min-width: 769px) {
+    .cylinder-section {
+        margin-top: 2rem !important; /* More space on desktop */
+        padding-top: 2rem !important;
+    }
+    
+    .membership-invite {
+        margin-top: 3rem !important; /* More space on desktop */
+        padding-top: 2rem !important;
+        padding-bottom: 3rem !important;
+    }
+    
+    .journey-section {
+        margin-top: 3rem !important; /* More space on desktop */
+        padding-top: 2rem !important;
+        padding-bottom: 3rem !important;
+    }
+    
+    .hero-section {
+        padding-bottom: 3rem !important; /* More space below hero on desktop */
+    }
+}
+
+/* COMPACT JOURNEY STEPS - Same for both */
 .journey-steps {
     display: flex;
     justify-content: center;
@@ -1594,30 +1630,7 @@ body::after {
     opacity: 0.7;
 }
 
-/* REDUCE SPACING BETWEEN ALL SECTIONS */
-.membership-invite {
-    margin-top: -3rem !important;
-    padding-top: 0 !important;
-    padding-bottom: 1rem !important;
-}
-
-.journey-section {
-    margin-top: -2rem !important;
-    padding-top: 0 !important;
-    padding-bottom: 1rem !important;
-}
-
-/* FIX MEMBERSHIP CARD SECTION SPACING */
-.membership-card-container {
-    padding: 1rem 0 !important;
-}
-
-/* FIX WELCOME TEXT SECTION SPACING */
-.welcome-text {
-    margin: 1rem 0 !important;
-}
-
-/* MOBILE SPACING FIXES */
+/* MOBILE SPECIFIC SPACING */
 @media (max-width: 768px) {
     .journey-steps {
         flex-direction: column;
@@ -1648,14 +1661,32 @@ body::after {
         font-size: 0.75rem;
     }
     
-    /* MOBILE HERO TO CYLINDER SPACING */
+    /* MOBILE HERO TO CYLINDER SPACING - EVEN CLOSER */
     .cylinder-section {
-        margin-top: -2rem !important;
+        margin-top: -3rem !important; /* Even closer on mobile */
     }
     
     .hero-section {
-        padding-bottom: 0.5rem !important;
+        padding-bottom: 0rem !important; /* Remove padding on mobile */
     }
+    
+    .membership-invite {
+        margin-top: -2rem !important; /* Keep close on mobile */
+    }
+    
+    .journey-section {
+        margin-top: -2rem !important; /* Keep close on mobile */
+    }
+}
+
+/* FIX MEMBERSHIP CARD SECTION SPACING */
+.membership-card-container {
+    padding: 1rem 0 !important;
+}
+
+/* FIX WELCOME TEXT SECTION SPACING */
+.welcome-text {
+    margin: 1rem 0 !important;
 }
 
 /* REMOVE VIDEO GLOW COMPLETELY */
