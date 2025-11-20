@@ -1519,3 +1519,46 @@ body::after {
     background: #D4AF37;
 }
 /* ===== END CHATBOT STYLES ===== */
+
+/* REDUCE SPACING BETWEEN SECTIONS */
+.cylinder-section {
+    margin-top: -3rem !important;
+    padding-top: 1rem !important;
+}
+
+.membership-invite {
+    margin-top: -2rem !important;
+    padding-top: 1rem !important;
+}
+
+.journey-section {
+    margin-top: -1rem !important;
+    padding-top: 1rem !important;
+}
+
+/* COMPACT JOURNEY STEPS */
+.journey-steps {
+    gap: 1.5rem !important;
+}
+
+.step {
+    padding: 1rem 0.5rem !important;
+}
+
+.step-arrow {
+    margin: 0 0.5rem !important;
+}
+
+/* REMOVE VIDEO GLOW EFFECT */
+.video-item {
+    box-shadow: none !important;
+    border: 1px solid rgba(193, 154, 48, 0.3) !important;
+}
+
+.video-wrapper {
+    box-shadow: none !important;
+}
+
+.training-video {
+    box-shadow: none !important;
+}
