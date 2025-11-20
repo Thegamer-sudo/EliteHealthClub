@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 //CHAT BOT................................................................................................................................................
-// ===== ELITE CHATBOT - FIXED DOUBLE MESSAGES =====
+// ===== ELITE CHATBOT - FINAL BUG FIXES =====
 class EliteChatbot {
     constructor() {
         this.userData = {
@@ -179,6 +179,7 @@ class EliteChatbot {
         };
         this.currentStep = 'welcome';
         this.isMobile = this.checkMobile();
+        this.hasShownPackageMessage = false; // NEW: Prevent double messages
         this.init();
     }
 
@@ -272,6 +273,7 @@ class EliteChatbot {
         console.log('Package selected:', packageName);
         
         this.userData.selectedPackage = packageName;
+        this.hasShownPackageMessage = false; // RESET for new selection
         
         const container = document.getElementById('chatbot-container');
         container.style.display = 'flex';
@@ -285,7 +287,6 @@ class EliteChatbot {
         }, 100);
     }
 
-    // FIXED: Single welcome message
     showWelcomeMessage() {
         this.addMessage('bot', `Hi! I'm Elite Assistant! 🏋️‍♂️\nWhat can I help you with today?`);
         this.showQuickActions(['Choose Membership Package', 'Ask Questions', 'Book Gym Tour']);
@@ -293,11 +294,16 @@ class EliteChatbot {
         this.showInput(false);
     }
 
-    // FIXED: SINGLE MESSAGE - No more double messages!
+    // FIXED: No double messages with flag check
     showPackageConfirmation() {
+        // PREVENT DOUBLE MESSAGES
+        if (this.hasShownPackageMessage) {
+            return;
+        }
+        
+        this.hasShownPackageMessage = true;
         const priceInfo = this.getPackagePrice(this.userData.selectedPackage);
         
-        // SINGLE MESSAGE - No more double messages!
         this.addMessage('bot', `🎯 **Great Choice!**\n\nYou selected: **${this.userData.selectedPackage}**\n\n${priceInfo}\n\nReady to book your gym tour?`);
         
         this.showActionButtons([
@@ -317,6 +323,7 @@ class EliteChatbot {
 
     showPackageSelection() {
         this.userData.selectedPackage = null;
+        this.hasShownPackageMessage = false; // Reset when choosing new package
         this.addMessage('bot', `📋 **Choose Your Membership Package:**`);
         
         const packages = [
@@ -336,6 +343,7 @@ class EliteChatbot {
 
     selectPackageInChat(packageName) {
         this.userData.selectedPackage = packageName;
+        this.hasShownPackageMessage = false; // Reset for in-chat selection
         this.addMessage('user', `${packageName}`);
         this.showPackageConfirmation();
     }
@@ -354,43 +362,54 @@ class EliteChatbot {
         return prices[packageName] || 'Contact for pricing';
     }
 
+    // FIXED: Auto-scroll to show "What's your name?" message
     startBookingFlow() {
         this.addMessage('user', 'Yes, book tour');
         this.addMessage('bot', `🎉 **Perfect!** Let's get you booked.`);
         
         setTimeout(() => {
             this.askForName();
-        }, 1000);
+        }, 800); // Reduced delay for faster flow
     }
 
+    // FIXED: Auto-scroll to show this message
     askForName() {
+        // Clear any existing timeouts to prevent delays
+        this.addMessage('bot', `👤 **What's your full name?**`);
+        this.currentStep = 'awaiting_name';
+        this.clearQuickActions();
+        this.showInput(true);
+        
+        // Force scroll to bottom to ensure message is visible
+        this.forceScrollToBottom();
+    }
+
+    // NEW: Force scroll to bottom to show latest messages
+    forceScrollToBottom() {
+        const messagesContainer = document.getElementById('chatbot-messages');
         setTimeout(() => {
-            this.addMessage('bot', `👤 **What's your full name?**`);
-            this.currentStep = 'awaiting_name';
-            this.clearQuickActions();
-            this.showInput(true);
-        }, 800);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }, 100);
     }
 
     askForTourTime() {
-        setTimeout(() => {
-            this.addMessage('bot', `🕒 **Choose tour time:**`);
-            
-            const tourTimes = [
-                { time: '🌅 Morning (Mon-Fri: 5AM-12PM)', type: 'Morning' },
-                { time: '☀️ Afternoon (Mon-Fri: 12PM-5PM)', type: 'Afternoon' },
-                { time: '🌙 Evening (Mon-Thu: 5PM-9PM)', type: 'Evening' },
-                { time: '📅 Weekend (Sat 6AM-4PM, Sun 6AM-2PM)', type: 'Weekend' }
-            ];
-            
-            this.showActionButtons(tourTimes.map(tour => ({
-                text: tour.time,
-                action: () => this.selectTourTime(tour.type)
-            })));
-            
-            this.currentStep = 'awaiting_tour_time';
-            this.showInput(false);
-        }, 800);
+        this.addMessage('bot', `🕒 **Choose tour time:**`);
+        
+        const tourTimes = [
+            { time: '🌅 Morning (Mon-Fri: 5AM-12PM)', type: 'Morning' },
+            { time: '☀️ Afternoon (Mon-Fri: 12PM-5PM)', type: 'Afternoon' },
+            { time: '🌙 Evening (Mon-Thu: 5PM-9PM)', type: 'Evening' },
+            { time: '📅 Weekend (Sat 6AM-4PM, Sun 6AM-2PM)', type: 'Weekend' }
+        ];
+        
+        this.showActionButtons(tourTimes.map(tour => ({
+            text: tour.time,
+            action: () => this.selectTourTime(tour.type)
+        })));
+        
+        this.currentStep = 'awaiting_tour_time';
+        this.showInput(false);
+        this.forceScrollToBottom(); // Ensure buttons are visible
     }
 
     selectTourTime(tourTime) {
@@ -400,44 +419,43 @@ class EliteChatbot {
     }
 
     showBookingSummary() {
-        setTimeout(() => {
-            this.addMessage('bot', `✅ **Booking Confirmed!**`);
-            
-            const summaryHTML = `
-                <div class="booking-summary">
-                    <div class="summary-item">
-                        <span class="summary-label">Name:</span>
-                        <span class="summary-value">${this.userData.name}</span>
-                    </div>
-                    <div class="summary-item">
-                        <span class="summary-label">Package:</span>
-                        <span class="summary-value">${this.userData.selectedPackage}</span>
-                    </div>
-                    <div class="summary-item">
-                        <span class="summary-label">Tour Time:</span>
-                        <span class="summary-value">${this.userData.tourTime}</span>
-                    </div>
+        this.addMessage('bot', `✅ **Booking Confirmed!**`);
+        
+        const summaryHTML = `
+            <div class="booking-summary">
+                <div class="summary-item">
+                    <span class="summary-label">Name:</span>
+                    <span class="summary-value">${this.userData.name}</span>
                 </div>
-            `;
+                <div class="summary-item">
+                    <span class="summary-label">Package:</span>
+                    <span class="summary-value">${this.userData.selectedPackage}</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Tour Time:</span>
+                    <span class="summary-value">${this.userData.tourTime}</span>
+                </div>
+            </div>
+        `;
+        
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = summaryHTML;
+        document.getElementById('chatbot-messages').appendChild(tempDiv);
+        
+        setTimeout(() => {
+            this.addMessage('bot', `📱 **Ready to send to WhatsApp?**`);
             
-            const tempDiv = document.createElement('div');
-            tempDiv.innerHTML = summaryHTML;
-            document.getElementById('chatbot-messages').appendChild(tempDiv);
-            
-            setTimeout(() => {
-                this.addMessage('bot', `📱 **Ready to send to WhatsApp?**`);
-                
-                this.showActionButtons([
-                    { 
-                        text: '💬 Send via WhatsApp', 
-                        action: () => this.sendToWhatsApp() 
-                    },
-                    { 
-                        text: '✏️ Edit Details', 
-                        action: () => this.restartBookingFlow() 
-                    }
-                ]);
-            }, 1000);
+            this.showActionButtons([
+                { 
+                    text: '💬 Send via WhatsApp', 
+                    action: () => this.sendToWhatsApp() 
+                },
+                { 
+                    text: '✏️ Edit Details', 
+                    action: () => this.restartBookingFlow() 
+                }
+            ]);
+            this.forceScrollToBottom(); // Ensure buttons are visible
         }, 800);
     }
 
@@ -478,11 +496,13 @@ Please confirm my booking!`;
             selectedPackage: null,
             tourTime: null
         };
+        this.hasShownPackageMessage = false;
         this.currentStep = 'welcome';
         
         setTimeout(() => {
             this.addMessage('bot', `💪 **Anything else I can help with?**`);
             this.showQuickActions(['Choose Membership Package', 'Ask Questions', 'Book Gym Tour']);
+            this.forceScrollToBottom();
         }, 2000);
     }
 
@@ -533,6 +553,7 @@ Please confirm my booking!`;
         }
         
         this.showQuickActions(['Choose Membership Package', 'Ask Questions', 'Book Gym Tour']);
+        this.forceScrollToBottom();
     }
 
     // UI Helpers
@@ -549,6 +570,7 @@ Please confirm my booking!`;
         });
         
         this.showInput(false);
+        this.forceScrollToBottom();
     }
 
     showActionButtons(actions) {
@@ -562,6 +584,8 @@ Please confirm my booking!`;
             button.onclick = item.action;
             actionsContainer.appendChild(button);
         });
+        
+        this.forceScrollToBottom();
     }
 
     clearQuickActions() {
@@ -577,6 +601,7 @@ Please confirm my booking!`;
                 this.addMessage('user', 'I have questions');
                 this.addMessage('bot', `❓ **Ask me anything!**\n\nI can help with:\n• Membership & pricing\n• Operating hours\n• Location & facilities\n• Booking tours\n\nWhat would you like to know?`);
                 this.showInput(true);
+                this.forceScrollToBottom();
                 break;
             case 'Book Gym Tour':
                 this.userData.selectedPackage = 'General';
@@ -597,6 +622,9 @@ Please confirm my booking!`;
         if (sender === 'user') {
             this.clearQuickActions();
         }
+        
+        // Auto-scroll to ensure new messages are visible
+        this.forceScrollToBottom();
     }
 }
 
