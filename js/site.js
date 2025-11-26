@@ -169,13 +169,14 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 //CHAT BOT................................................................................................................................................
-// ===== ELITE CHATBOT - NO EMOJIS =====
+// ===== ELITE CHATBOT - BRANCH PRICING =====
 class EliteChatbot {
     constructor() {
         this.userData = {
             name: '',
             selectedPackage: null,
-            tourTime: null
+            tourTime: null,
+            branch: null
         };
         this.currentStep = 'welcome';
         this.isMobile = this.checkMobile();
@@ -215,11 +216,21 @@ class EliteChatbot {
             if (e.target.closest('.membership-plan .btn')) {
                 const planElement = e.target.closest('.membership-plan');
                 const planTitle = planElement.querySelector('.plan-title').textContent.trim();
-                this.handlePackageSelection(planTitle);
+                const branch = this.detectBranchFromPage();
+                this.handlePackageSelection(planTitle, branch);
                 e.preventDefault();
                 return false;
             }
         });
+    }
+
+    detectBranchFromPage() {
+        // Check which branch pricing is currently active on the page
+        const activePricing = document.querySelector('.branch-pricing.active');
+        if (activePricing && activePricing.id === 'merebank-pricing') {
+            return 'MEREBANK';
+        }
+        return 'OVERPORT'; // Default to Overport
     }
 
     toggleChat() {
@@ -264,10 +275,11 @@ class EliteChatbot {
         }
     }
 
-    handlePackageSelection(packageName) {
-        console.log('Package selected:', packageName);
+    handlePackageSelection(packageName, branch = null) {
+        console.log('Package selected:', packageName, 'Branch:', branch);
         
         this.userData.selectedPackage = packageName;
+        this.userData.branch = branch || this.detectBranchFromPage();
         this.hasShownPackageMessage = false;
         
         const container = document.getElementById('chatbot-container');
@@ -294,7 +306,7 @@ class EliteChatbot {
         }
         
         this.hasShownPackageMessage = true;
-        const priceInfo = this.getPackagePrice(this.userData.selectedPackage);
+        const priceInfo = this.getPackagePrice(this.userData.selectedPackage, this.userData.branch);
         
         this.addMessage('bot', `**Great Choice!**\n\nYou selected: **${this.userData.selectedPackage}**\n\n${priceInfo}\n\nReady to book your gym tour?`);
         
@@ -315,16 +327,22 @@ class EliteChatbot {
 
     showPackageSelection() {
         this.userData.selectedPackage = null;
+        this.userData.branch = null;
         this.hasShownPackageMessage = false;
         this.addMessage('bot', `**Choose Your Membership Package:**`);
         
         const packages = [
-            { name: 'GENERAL', price: 'R350/month' },
-            { name: 'STUDENT', price: 'R200/month' },
-            { name: 'DEBIT ORDER', price: 'R250/month' },
-            { name: 'PENSIONER', price: 'R250/month' },
-            { name: '6 MONTH PACKAGE', price: 'R1,500 once-off' },
-            { name: 'FAMILY PACKAGE', price: 'R800/month' }
+            { name: 'GENERAL - OVERPORT', price: 'R350/month' },
+            { name: 'STUDENT - OVERPORT', price: 'R200/month' },
+            { name: 'DEBIT ORDER - OVERPORT', price: 'R250/month' },
+            { name: 'PENSIONER - OVERPORT', price: 'R250/month' },
+            { name: '6 MONTH PACKAGE - OVERPORT', price: 'R1,500 once-off' },
+            { name: 'FAMILY PACKAGE - OVERPORT', price: 'R800/month' },
+            { name: 'GENERAL - MEREBANK', price: 'R300/month' },
+            { name: 'DEBIT ORDER - MEREBANK', price: 'R200/month' },
+            { name: 'STUDENT - MEREBANK', price: 'R200/month' },
+            { name: '6 MONTH PACKAGE - MEREBANK', price: 'R1,200 once-off' },
+            { name: 'FAMILY PACKAGE - MEREBANK', price: 'R600/month' }
         ];
         
         this.showActionButtons(packages.map(pkg => ({
@@ -334,24 +352,44 @@ class EliteChatbot {
     }
 
     selectPackageInChat(packageName) {
+        // Extract branch from package name
+        const branch = packageName.includes('MEREBANK') ? 'MEREBANK' : 'OVERPORT';
         this.userData.selectedPackage = packageName;
+        this.userData.branch = branch;
         this.hasShownPackageMessage = false;
         this.addMessage('user', `${packageName}`);
         this.showPackageConfirmation();
     }
 
-    getPackagePrice(packageName) {
-        const prices = {
+    getPackagePrice(packageName, branch = 'OVERPORT') {
+        const overportPrices = {
             'STUDENT': '**First Payment:** R600\n(R200/month + R400 joining fee)',
             'GENERAL': '**First Payment:** R750\n(R350/month + R400 joining fee)',
             'DEBIT ORDER': '**First Payment:** R650\n(R250/month + R400 joining fee)',
             'PENSIONER': '**First Payment:** R650\n(R250/month + R400 joining fee)',
             '6 MONTH PACKAGE': '**Total:** R1,500\n(6 months - no joining fee)',
             'FAMILY PACKAGE': '**First Payment:** R1,200\n(R800/month + R400 joining fee)',
-            'DAY PASS': '**Day Pass:** R50'
+            'DAY PASS': '**Day Pass:** R50',
+            // Branch-specific package names
+            'STUDENT - OVERPORT': '**First Payment:** R600\n(R200/month + R400 joining fee)',
+            'GENERAL - OVERPORT': '**First Payment:** R750\n(R350/month + R400 joining fee)',
+            'DEBIT ORDER - OVERPORT': '**First Payment:** R650\n(R250/month + R400 joining fee)',
+            'PENSIONER - OVERPORT': '**First Payment:** R650\n(R250/month + R400 joining fee)',
+            '6 MONTH PACKAGE - OVERPORT': '**Total:** R1,500\n(6 months - no joining fee)',
+            'FAMILY PACKAGE - OVERPORT': '**First Payment:** R1,200\n(R800/month + R400 joining fee)'
         };
         
-        return prices[packageName] || 'Contact for pricing';
+        const merebankPrices = {
+            'GENERAL - MEREBANK': '**First Payment:** R400\n(R300/month + R100 card fee)',
+            'DEBIT ORDER - MEREBANK': '**First Payment:** R300\n(R200/month + R100 card fee)',
+            'STUDENT - MEREBANK': '**First Payment:** R300\n(R200/month + R100 card fee)',
+            '6 MONTH PACKAGE - MEREBANK': '**Total:** R1,300\n(R1,200 + R100 card fee)',
+            'FAMILY PACKAGE - MEREBANK': '**First Payment:** R700\n(R600/month + R100 card fee)',
+            'DAY PASS - MEREBANK': '**Day Pass:** R50'
+        };
+
+        // Check Merebank first, then Overport
+        return merebankPrices[packageName] || overportPrices[packageName] || 'Contact for pricing';
     }
 
     startBookingFlow() {
@@ -407,6 +445,10 @@ class EliteChatbot {
     showBookingSummary() {
         this.addMessage('bot', `**Booking Confirmed!**`);
         
+        const location = this.userData.branch === 'MEREBANK' 
+            ? 'Merebank Plaza, 50 Bombay Walk, Merebank' 
+            : 'Spark Lifestyle Centre, 98 Cannon Avenue, Overport';
+        
         const summaryHTML = `
             <div class="booking-summary">
                 <div class="summary-item">
@@ -416,6 +458,10 @@ class EliteChatbot {
                 <div class="summary-item">
                     <span class="summary-label">Package:</span>
                     <span class="summary-value">${this.userData.selectedPackage}</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Location:</span>
+                    <span class="summary-value">${location}</span>
                 </div>
                 <div class="summary-item">
                     <span class="summary-label">Tour Time:</span>
@@ -459,12 +505,17 @@ class EliteChatbot {
     }
 
     createWhatsAppMessage() {
+        const location = this.userData.branch === 'MEREBANK' 
+            ? 'Merebank Plaza, 50 Bombay Walk, Merebank' 
+            : 'Spark Lifestyle Centre, 98 Cannon Avenue, Overport';
+            
         return `Hi Elite Health Club! 
 
 I'd like to book a gym tour:
 
 Name: ${this.userData.name}
 Package: ${this.userData.selectedPackage}
+Location: ${location}
 Tour Time: ${this.userData.tourTime}
 
 Please confirm my booking!`;
@@ -480,7 +531,8 @@ Please confirm my booking!`;
         this.userData = {
             name: '',
             selectedPackage: null,
-            tourTime: null
+            tourTime: null,
+            branch: null
         };
         this.hasShownPackageMessage = false;
         this.currentStep = 'welcome';
@@ -523,11 +575,11 @@ Please confirm my booking!`;
         if (lowerMessage.includes('hello') || lowerMessage.includes('hi')) {
             this.addMessage('bot', '**Hello!** Welcome to Elite Health Club!');
         } else if (lowerMessage.includes('price') || lowerMessage.includes('cost')) {
-            this.addMessage('bot', `**Membership Pricing:**\n\n• Student: R200/month\n• General: R350/month\n• Debit: R250/month\n• Pensioner: R250/month\n• 6-Month: R1,500 once-off\n• Family: R800/month\n\n+ R400 joining fee for new members`);
+            this.addMessage('bot', `**Membership Pricing:**\n\n• Overport Branch:\n  - Student: R200/month\n  - General: R350/month\n  - Debit: R250/month\n  - Pensioner: R250/month\n  - 6-Month: R1,500 once-off\n  - Family: R800/month\n  + R400 joining fee\n\n• Merebank Branch:\n  - General: R300/month\n  - Debit: R200/month\n  - Student: R200/month\n  - 6-Month: R1,200 once-off\n  - Family: R600/month\n  + R100 card fee`);
         } else if (lowerMessage.includes('hour') || lowerMessage.includes('open')) {
             this.addMessage('bot', `**Operating Hours:**\n\n• Mon-Thu: 5:00 AM - 9:00 PM\n• Friday: 5:00 AM - 8:00 PM\n• Saturday: 6:00 AM - 4:00 PM\n• Sunday: 6:00 AM - 2:00 PM`);
         } else if (lowerMessage.includes('where') || lowerMessage.includes('location')) {
-            this.addMessage('bot', `**Location:**\n\nElite Health Club\nLevel 3 – The Spark Lifestyle Centre\n98 Cannon Avenue, Overport\nDurban`);
+            this.addMessage('bot', `**Locations:**\n\n• Overport Branch:\n  Level 3 – The Spark Lifestyle Centre\n  98 Cannon Avenue, Overport, Durban\n\n• Merebank Branch:\n  Merebank Plaza\n  50 Bombay Walk, Merebank, Durban`);
         } else if (lowerMessage.includes('trainer') || lowerMessage.includes('coach')) {
             this.addMessage('bot', `**Our Trainers:**\n\nWe have certified trainers to help you reach your fitness goals! They can create personalized workout plans and provide guidance.`);
         } else if (lowerMessage.includes('equipment') || lowerMessage.includes('machine')) {
@@ -587,7 +639,8 @@ Please confirm my booking!`;
                 this.forceScrollToBottom();
                 break;
             case 'Book Gym Tour':
-                this.userData.selectedPackage = 'General';
+                this.userData.selectedPackage = 'General - OVERPORT';
+                this.userData.branch = 'OVERPORT';
                 this.startBookingFlow();
                 break;
         }
