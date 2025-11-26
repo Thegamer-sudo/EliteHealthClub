@@ -1,4 +1,4 @@
-// ===== ELITE CHATBOT - FIXED BRANCH FLOW =====
+// ===== ELITE CHATBOT - MOBILE FIXED & BRANCH DETECTION =====
 class EliteChatbot {
     constructor() {
         this.userData = {
@@ -14,8 +14,15 @@ class EliteChatbot {
     }
 
     init() {
-        this.setupEventListeners();
-        console.log('Elite Chatbot initialized');
+        // Wait for DOM to be fully ready, especially for mobile
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                this.setupEventListeners();
+            });
+        } else {
+            this.setupEventListeners();
+        }
+        console.log('Elite Chatbot initialized - Mobile:', this.isMobile);
     }
 
     checkMobile() {
@@ -23,29 +30,45 @@ class EliteChatbot {
     }
 
     setupEventListeners() {
-        document.getElementById('chatbot-toggle').addEventListener('click', () => {
-            this.toggleChat();
-        });
+        // Mobile-safe event listener setup
+        const toggleBtn = document.getElementById('chatbot-toggle');
+        const closeBtn = document.getElementById('chatbot-close');
+        const sendBtn = document.getElementById('chatbot-send');
+        const inputField = document.getElementById('chatbot-input');
 
-        document.getElementById('chatbot-close').addEventListener('click', () => {
-            this.closeChat();
-        });
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', () => {
+                this.toggleChat();
+            });
+        }
 
-        document.getElementById('chatbot-send').addEventListener('click', () => {
-            this.sendMessage();
-        });
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                this.closeChat();
+            });
+        }
 
-        document.getElementById('chatbot-input').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
+        if (sendBtn) {
+            sendBtn.addEventListener('click', () => {
                 this.sendMessage();
-            }
-        });
+            });
+        }
 
+        if (inputField) {
+            inputField.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    this.sendMessage();
+                }
+            });
+        }
+
+        // Improved package selection detection
         document.addEventListener('click', (e) => {
             if (e.target.closest('.membership-plan .btn')) {
                 const planElement = e.target.closest('.membership-plan');
                 const planTitle = planElement.querySelector('.plan-title').textContent.trim();
                 const branch = this.detectBranchFromPage();
+                console.log('Package clicked:', planTitle, 'Branch detected:', branch);
                 this.handlePackageSelection(planTitle, branch);
                 e.preventDefault();
                 return false;
@@ -54,23 +77,39 @@ class EliteChatbot {
     }
 
     detectBranchFromPage() {
-        // Check which branch pricing is currently active on the page
+        // More reliable branch detection
         const activePricing = document.querySelector('.branch-pricing.active');
-        if (activePricing && activePricing.id === 'merebank-pricing') {
+        if (activePricing) {
+            if (activePricing.id === 'merebank-pricing') {
+                return 'MEREBANK';
+            } else if (activePricing.id === 'overport-pricing') {
+                return 'OVERPORT';
+            }
+        }
+        
+        // Fallback: check URL or other indicators
+        if (window.location.href.includes('merebank')) {
             return 'MEREBANK';
         }
+        
         return 'OVERPORT'; // Default to Overport
     }
 
     toggleChat() {
         const container = document.getElementById('chatbot-container');
+        if (!container) return;
+        
         const isOpening = container.style.display !== 'flex';
         
         container.style.display = isOpening ? 'flex' : 'none';
         
         if (isOpening) {
+            // Mobile-specific focus handling
             if (!this.isMobile) {
-                document.getElementById('chatbot-input').focus();
+                setTimeout(() => {
+                    const input = document.getElementById('chatbot-input');
+                    if (input) input.focus();
+                }, 300);
             }
             if (!this.userData.selectedPackage) {
                 this.showWelcomeMessage();
@@ -81,21 +120,28 @@ class EliteChatbot {
     }
 
     closeChat() {
-        document.getElementById('chatbot-container').style.display = 'none';
+        const container = document.getElementById('chatbot-container');
+        if (container) {
+            container.style.display = 'none';
+        }
         this.hideKeyboard();
     }
 
     hideKeyboard() {
-        document.getElementById('chatbot-input').blur();
+        const input = document.getElementById('chatbot-input');
+        if (input) input.blur();
     }
 
     showInput(show = true) {
         const inputArea = document.querySelector('.chatbot-input');
+        if (!inputArea) return;
+        
         if (show) {
             inputArea.classList.add('active');
             if (!this.isMobile) {
                 setTimeout(() => {
-                    document.getElementById('chatbot-input').focus();
+                    const input = document.getElementById('chatbot-input');
+                    if (input) input.focus();
                 }, 300);
             }
         } else {
@@ -112,14 +158,20 @@ class EliteChatbot {
         this.hasShownPackageMessage = false;
         
         const container = document.getElementById('chatbot-container');
-        container.style.display = 'flex';
+        if (container) {
+            container.style.display = 'flex';
+        }
         
-        document.getElementById('chatbot-messages').innerHTML = '';
+        const messagesContainer = document.getElementById('chatbot-messages');
+        if (messagesContainer) {
+            messagesContainer.innerHTML = '';
+        }
         this.clearQuickActions();
         
+        // Mobile-friendly delay
         setTimeout(() => {
             this.showPackageConfirmation();
-        }, 100);
+        }, 150);
     }
 
     showWelcomeMessage() {
@@ -137,7 +189,10 @@ class EliteChatbot {
         this.hasShownPackageMessage = true;
         const priceInfo = this.getPackagePrice(this.userData.selectedPackage, this.userData.branch);
         
-        this.addMessage('bot', `**Great Choice!**\n\nYou selected: **${this.userData.selectedPackage}**\n\n${priceInfo}\n\nReady to book your gym tour?`);
+        // Clean package name for display
+        const cleanPackageName = this.userData.selectedPackage.replace(' - OVERPORT', '').replace(' - MEREBANK', '');
+        
+        this.addMessage('bot', `**Great Choice!**\n\nYou selected: **${cleanPackageName}**\n\n${priceInfo}\n\nReady to book your gym tour?`);
         
         this.showActionButtons([
             { 
@@ -154,7 +209,6 @@ class EliteChatbot {
         this.showInput(false);
     }
 
-    // NEW: Show branch selection first
     showBranchSelection() {
         this.userData.selectedPackage = null;
         this.userData.branch = null;
@@ -164,11 +218,11 @@ class EliteChatbot {
         
         this.showActionButtons([
             { 
-                text: '🏢 Overport Branch', 
+                text: 'Overport Branch', 
                 action: () => this.showOverportPackages() 
             },
             { 
-                text: '📍 Merebank Plaza', 
+                text: 'Merebank Plaza', 
                 action: () => this.showMerebankPackages() 
             }
         ]);
@@ -219,8 +273,14 @@ class EliteChatbot {
         this.userData.selectedPackage = packageName;
         this.userData.branch = branch;
         this.hasShownPackageMessage = false;
-        this.addMessage('user', `${packageName}`);
-        this.showPackageConfirmation();
+        
+        // Clean package name for user message
+        const cleanPackageName = packageName.replace(' - OVERPORT', '').replace(' - MEREBANK', '');
+        this.addMessage('user', `${cleanPackageName}`);
+        
+        setTimeout(() => {
+            this.showPackageConfirmation();
+        }, 100);
     }
 
     getPackagePrice(packageName, branch = 'OVERPORT') {
@@ -242,16 +302,29 @@ class EliteChatbot {
         };
         
         const merebankPrices = {
+            'GENERAL': '**First Payment:** R400\n(R300/month + R100 card fee)',
+            'DEBIT ORDER': '**First Payment:** R300\n(R200/month + R100 card fee)',
+            'STUDENT': '**First Payment:** R250\n(R150/month + R100 card fee)',
+            '6 MONTH PACKAGE': '**Total:** R1,300\n(R1,200 + R100 card fee)',
+            'FAMILY PACKAGE': '**First Payment:** R700\n(R600/month + R100 card fee)',
+            'DAY PASS': '**Day Pass:** R50',
+            // Branch-specific package names
             'GENERAL - MEREBANK': '**First Payment:** R400\n(R300/month + R100 card fee)',
             'DEBIT ORDER - MEREBANK': '**First Payment:** R300\n(R200/month + R100 card fee)',
             'STUDENT - MEREBANK': '**First Payment:** R250\n(R150/month + R100 card fee)',
             '6 MONTH PACKAGE - MEREBANK': '**Total:** R1,300\n(R1,200 + R100 card fee)',
-            'FAMILY PACKAGE - MEREBANK': '**First Payment:** R700\n(R600/month + R100 card fee)',
-            'DAY PASS - MEREBANK': '**Day Pass:** R50'
+            'FAMILY PACKAGE - MEREBANK': '**First Payment:** R700\n(R600/month + R100 card fee)'
         };
 
-        // Check Merebank first, then Overport
-        return merebankPrices[packageName] || overportPrices[packageName] || 'Contact for pricing';
+        // Clean package name for lookup
+        const cleanPackageName = packageName.replace(' - OVERPORT', '').replace(' - MEREBANK', '');
+        
+        // Get price based on branch
+        if (branch === 'MEREBANK') {
+            return merebankPrices[packageName] || merebankPrices[cleanPackageName] || 'Contact for pricing';
+        } else {
+            return overportPrices[packageName] || overportPrices[cleanPackageName] || 'Contact for pricing';
+        }
     }
 
     startBookingFlow() {
@@ -273,9 +346,11 @@ class EliteChatbot {
 
     forceScrollToBottom() {
         const messagesContainer = document.getElementById('chatbot-messages');
-        setTimeout(() => {
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        }, 100);
+        if (messagesContainer) {
+            setTimeout(() => {
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }, 100);
+        }
     }
 
     askForTourTime() {
@@ -311,6 +386,8 @@ class EliteChatbot {
             ? 'Merebank Plaza, 50 Bombay Walk, Merebank' 
             : 'Spark Lifestyle Centre, 98 Cannon Avenue, Overport';
         
+        const cleanPackageName = this.userData.selectedPackage.replace(' - OVERPORT', '').replace(' - MEREBANK', '');
+        
         const summaryHTML = `
             <div class="booking-summary">
                 <div class="summary-item">
@@ -319,7 +396,7 @@ class EliteChatbot {
                 </div>
                 <div class="summary-item">
                     <span class="summary-label">Package:</span>
-                    <span class="summary-value">${this.userData.selectedPackage.replace(' - OVERPORT', '').replace(' - MEREBANK', '')}</span>
+                    <span class="summary-value">${cleanPackageName}</span>
                 </div>
                 <div class="summary-item">
                     <span class="summary-label">Location:</span>
@@ -334,7 +411,10 @@ class EliteChatbot {
         
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = summaryHTML;
-        document.getElementById('chatbot-messages').appendChild(tempDiv);
+        const messagesContainer = document.getElementById('chatbot-messages');
+        if (messagesContainer) {
+            messagesContainer.appendChild(tempDiv);
+        }
         
         setTimeout(() => {
             this.addMessage('bot', `**Ready to send to WhatsApp?**`);
@@ -410,6 +490,8 @@ Please confirm my booking!`;
 
     sendMessage() {
         const input = document.getElementById('chatbot-input');
+        if (!input) return;
+        
         const message = input.value.trim();
         
         if (message) {
@@ -458,6 +540,8 @@ Please confirm my booking!`;
 
     showQuickActions(actions) {
         const actionsContainer = document.getElementById('chatbot-actions');
+        if (!actionsContainer) return;
+        
         actionsContainer.innerHTML = '';
         
         actions.forEach(actionText => {
@@ -474,6 +558,8 @@ Please confirm my booking!`;
 
     showActionButtons(actions) {
         const actionsContainer = document.getElementById('chatbot-actions');
+        if (!actionsContainer) return;
+        
         actionsContainer.innerHTML = '';
         
         actions.forEach(item => {
@@ -488,13 +574,16 @@ Please confirm my booking!`;
     }
 
     clearQuickActions() {
-        document.getElementById('chatbot-actions').innerHTML = '';
+        const actionsContainer = document.getElementById('chatbot-actions');
+        if (actionsContainer) {
+            actionsContainer.innerHTML = '';
+        }
     }
 
     handleQuickAction(action) {
         switch(action) {
             case 'Choose Membership Package':
-                this.showBranchSelection(); // NOW SHOWS BRANCH SELECTION FIRST
+                this.showBranchSelection();
                 break;
             case 'Ask Questions':
                 this.addMessage('user', 'I have questions');
@@ -512,6 +601,8 @@ Please confirm my booking!`;
 
     addMessage(sender, text) {
         const messagesContainer = document.getElementById('chatbot-messages');
+        if (!messagesContainer) return;
+        
         const messageDiv = document.createElement('div');
         messageDiv.className = `chat-message ${sender}-message`;
         messageDiv.innerHTML = text.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
@@ -527,7 +618,23 @@ Please confirm my booking!`;
     }
 }
 
-// Initialize chatbot
-document.addEventListener('DOMContentLoaded', function() {
-    window.eliteChatbot = new EliteChatbot();
-});
+// Mobile-safe initialization
+function initializeChatbot() {
+    // Wait a bit longer for mobile devices
+    if (window.eliteChatbot) return;
+    
+    setTimeout(() => {
+        window.eliteChatbot = new EliteChatbot();
+        console.log('Chatbot initialized for mobile');
+    }, 500);
+}
+
+// Multiple initialization methods for mobile compatibility
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeChatbot);
+} else {
+    initializeChatbot();
+}
+
+// Also initialize on window load for mobile
+window.addEventListener('load', initializeChatbot);
