@@ -249,8 +249,8 @@
                 <!-- BRANCH SELECTION TABS -->
                 <div class="branch-tabs-container text-center mb-4">
                     <div class="btn-group branch-tabs" role="group">
-                        <button type="button" class="btn btn-gold active" data-branch="durban">
-                            <i class="fas fa-building me-2"></i>Durban Main
+                        <button type="button" class="btn btn-gold active" data-branch="overport">
+                            <i class="fas fa-building me-2"></i>Overport
                         </button>
                         <button type="button" class="btn btn-outline-gold" data-branch="merebank">
                             <i class="fas fa-store me-2"></i>Merebank Plaza
@@ -274,8 +274,8 @@
                     </div>
                 </div>
                 
-                <!-- DURBAN PRICING SECTION -->
-                <div class="branch-pricing active" id="durban-pricing">
+                <!-- OVERPORT PRICING SECTION -->
+                <div class="branch-pricing active" id="overport-pricing">
                     <div class="row">
                         <!-- General Membership -->
                         <div class="col-md-6 col-lg-4 mb-4">
@@ -288,7 +288,7 @@
                                     <li>Locker room facilities</li>
                                     <li>Free parking</li>
                                 </ul>
-                                <button class="btn btn-outline-gold w-100" onclick="eliteChatbot.handlePackageSelection('GENERAL')">
+                                <button class="btn btn-outline-gold w-100" onclick="eliteChatbot.handlePackageSelection('GENERAL - OVERPORT')">
                                     Choose General
                                 </button>
                             </div>
@@ -305,7 +305,7 @@
                                     <li>No price increases</li>
                                     <li>Easy cancellation</li>
                                 </ul>
-                                <button class="btn btn-outline-gold w-100" onclick="eliteChatbot.handlePackageSelection('DEBIT ORDER')">
+                                <button class="btn btn-outline-gold w-100" onclick="eliteChatbot.handlePackageSelection('DEBIT ORDER - OVERPORT')">
                                     Choose Debit
                                 </button>
                             </div>
@@ -322,7 +322,7 @@
                                     <li>Valid student ID required</li>
                                     <li>All gym access included</li>
                                 </ul>
-                                <button class="btn btn-outline-gold w-100" onclick="eliteChatbot.handlePackageSelection('STUDENT')">
+                                <button class="btn btn-outline-gold w-100" onclick="eliteChatbot.handlePackageSelection('STUDENT - OVERPORT')">
                                     Choose Student
                                 </button>
                             </div>
@@ -339,7 +339,7 @@
                                     <li>Peaceful training environment</li>
                                     <li>Senior-friendly equipment</li>
                                 </ul>
-                                <button class="btn btn-outline-gold w-100" onclick="eliteChatbot.handlePackageSelection('PENSIONER')">
+                                <button class="btn btn-outline-gold w-100" onclick="eliteChatbot.handlePackageSelection('PENSIONER - OVERPORT')">
                                     Choose Pensioner
                                 </button>
                             </div>
@@ -356,7 +356,7 @@
                                     <li>No monthly payments</li>
                                     <li>Perfect commitment package</li>
                                 </ul>
-                                <button class="btn btn-outline-gold w-100" onclick="eliteChatbot.handlePackageSelection('6 MONTH PACKAGE')">
+                                <button class="btn btn-outline-gold w-100" onclick="eliteChatbot.handlePackageSelection('6 MONTH PACKAGE - OVERPORT')">
                                     Choose 6 Months
                                 </button>
                             </div>
@@ -373,10 +373,23 @@
                                     <li>All individual benefits</li>
                                     <li>Perfect for households</li>
                                 </ul>
-                                <button class="btn btn-outline-gold w-100" onclick="eliteChatbot.handlePackageSelection('FAMILY PACKAGE')">
+                                <button class="btn btn-outline-gold w-100" onclick="eliteChatbot.handlePackageSelection('FAMILY PACKAGE - OVERPORT')">
                                     Choose Family
                                 </button>
                             </div>
+                        </div>
+                    </div>
+
+                    <!-- R400 Joining Fee Notice FOR OVERPORT -->
+                    <div class="joining-fee-notice text-center mt-4">
+                        <div class="notice-card">
+                            <h4 class="gold-text mb-3">Important Membership Information</h4>
+                            <p class="text-light mb-2">
+                                <strong>All new members require a <span class="gold-text">R400 Joining Fee</span></strong>
+                            </p>
+                            <p class="text-light small mb-0">
+                                Your first payment will be: <strong>R400 Joining Fee + Your Chosen Monthly Rate</strong>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -395,9 +408,6 @@
                                     <li>Locker room facilities</li>
                                     <li>Free parking</li>
                                 </ul>
-                                <div class="fee-notice text-center mb-2">
-                                    <small class="text-gold">+ R400 Joining Fee + R100 Card Fee</small>
-                                </div>
                                 <button class="btn btn-outline-gold w-100" onclick="eliteChatbot.handlePackageSelection('GENERAL - MEREBANK')">
                                     Choose General
                                 </button>
@@ -415,9 +425,6 @@
                                     <li>No price increases</li>
                                     <li>Easy cancellation</li>
                                 </ul>
-                                <div class="fee-notice text-center mb-2">
-                                    <small class="text-gold">+ R400 Joining Fee + R100 Card Fee</small>
-                                </div>
                                 <button class="btn btn-outline-gold w-100" onclick="eliteChatbot.handlePackageSelection('DEBIT ORDER - MEREBANK')">
                                     Choose Debit
                                 </button>
@@ -435,9 +442,6 @@
                                     <li>Valid student ID required</li>
                                     <li>All gym access included</li>
                                 </ul>
-                                <div class="fee-notice text-center mb-2">
-                                    <small class="text-gold">+ R400 Joining Fee + R100 Card Fee</small>
-                                </div>
                                 <button class="btn btn-outline-gold w-100" onclick="eliteChatbot.handlePackageSelection('STUDENT - MEREBANK')">
                                     Choose Student
                                 </button>
@@ -455,9 +459,6 @@
                                     <li>No monthly payments</li>
                                     <li>Perfect commitment package</li>
                                 </ul>
-                                <div class="fee-notice text-center mb-2">
-                                    <small class="text-gold">+ R100 Card Fee (No joining fee)</small>
-                                </div>
                                 <button class="btn btn-outline-gold w-100" onclick="eliteChatbot.handlePackageSelection('6 MONTH PACKAGE - MEREBANK')">
                                     Choose 6 Months
                                 </button>
@@ -475,27 +476,24 @@
                                     <li>All individual benefits</li>
                                     <li>Perfect for households</li>
                                 </ul>
-                                <div class="fee-notice text-center mb-2">
-                                    <small class="text-gold">+ R400 Joining Fee + R100 Card Fee</small>
-                                </div>
                                 <button class="btn btn-outline-gold w-100" onclick="eliteChatbot.handlePackageSelection('FAMILY PACKAGE - MEREBANK')">
                                     Choose Family
                                 </button>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- R400 Joining Fee Notice -->
-                <div class="joining-fee-notice text-center mt-4">
-                    <div class="notice-card">
-                        <h4 class="gold-text mb-3">Important Membership Information</h4>
-                        <p class="text-light mb-2">
-                            <strong>All new members require a <span class="gold-text">R400 Joining Fee</span></strong>
-                        </p>
-                        <p class="text-light small mb-0" id="fee-details">
-                            Your first payment will be: <strong>R400 Joining Fee + Your Chosen Monthly Rate</strong>
-                        </p>
+                    <!-- R100 Card Fee Notice FOR MEREBANK -->
+                    <div class="joining-fee-notice text-center mt-4">
+                        <div class="notice-card">
+                            <h4 class="gold-text mb-3">Important Membership Information</h4>
+                            <p class="text-light mb-2">
+                                <strong>All new members require a <span class="gold-text">R100 Card Fee</span></strong>
+                            </p>
+                            <p class="text-light small mb-0">
+                                Your first payment will be: <strong>R100 Card Fee + Your Chosen Monthly Rate</strong>
+                            </p>
+                        </div>
                     </div>
                 </div>
 
@@ -615,7 +613,6 @@
             const tabButtons = document.querySelectorAll('.branch-tabs .btn');
             const pricingSections = document.querySelectorAll('.branch-pricing');
             const branchLocation = document.getElementById('branch-location');
-            const feeDetails = document.getElementById('fee-details');
 
             tabButtons.forEach(button => {
                 button.addEventListener('click', function() {
@@ -636,12 +633,10 @@
                     document.getElementById(`${branch}-pricing`).classList.add('active');
                     
                     // Update location text
-                    if (branch === 'durban') {
+                    if (branch === 'overport') {
                         branchLocation.textContent = 'Level 3 – The Spark Lifestyle Centre, 98 Cannon Avenue, Overport, Durban';
-                        feeDetails.innerHTML = 'Your first payment will be: <strong>R400 Joining Fee + Your Chosen Monthly Rate</strong>';
                     } else {
                         branchLocation.textContent = 'Merebank Plaza, 50 Bombay Walk, Merebank, Durban';
-                        feeDetails.innerHTML = 'Your first payment will be: <strong>R400 Joining Fee + R100 Card Fee + Your Chosen Monthly Rate</strong>';
                     }
                 });
             });
