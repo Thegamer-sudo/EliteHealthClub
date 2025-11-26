@@ -1,175 +1,4 @@
-// SUPER SIMPLE QUOTES CAROUSEL - NO COMPLEXITY
-document.addEventListener('DOMContentLoaded', function () {
-    // QUOTES CAROUSEL - SIMPLE AND RELIABLE
-    const quotes = document.querySelectorAll('.quote-slide');
-    let currentIndex = 0;
-
-    function rotateQuotes() {
-        // Remove active from current quote
-        quotes[currentIndex].classList.remove('active');
-
-        // Move to next quote
-        currentIndex = (currentIndex + 1) % quotes.length;
-
-        // Add active to new quote
-        quotes[currentIndex].classList.add('active');
-    }
-
-    // Start carousel if quotes exist
-    if (quotes.length > 0) {
-        // Show first quote
-        quotes[0].classList.add('active');
-
-        // Rotate every 4 seconds
-        setInterval(rotateQuotes, 4000);
-    }
-
-    // CYLINDER ANIMATION
-    const cylinder = document.querySelector('.cylinder');
-    if (cylinder) {
-        cylinder.addEventListener('mouseenter', () => {
-            cylinder.style.animationPlayState = 'paused';
-        });
-
-        cylinder.addEventListener('mouseleave', () => {
-            cylinder.style.animationPlayState = 'running';
-        });
-    }
-
-    // NAVBAR SCROLL EFFECT
-    const navbar = document.querySelector('.custom-navbar');
-    if (navbar) {
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 100) {
-                navbar.style.background = 'rgba(10, 10, 10, 0.98)';
-                navbar.style.padding = '0.5rem 0';
-            } else {
-                navbar.style.background = 'rgba(10, 10, 10, 0.95)';
-                navbar.style.padding = '1rem 0';
-            }
-        });
-    }
-
-    // SMOOTH SCROLLING
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
-
-    // PAGE LOAD ANIMATION
-    document.body.style.opacity = '0';
-    document.body.style.transition = 'opacity 0.5s ease';
-    setTimeout(() => {
-        document.body.style.opacity = '1';
-    }, 100);
-});
-
-// Video Carousel Functionality
-document.addEventListener('DOMContentLoaded', function() {
-    const carousel = document.querySelector('.video-carousel');
-    const videos = document.querySelectorAll('.training-video');
-    const videoWrappers = document.querySelectorAll('.video-wrapper');
-    const prevBtn = document.querySelector('.prev-btn');
-    const nextBtn = document.querySelector('.next-btn');
-    
-    let currentVideo = null;
-    
-    // Pause all videos except the current one
-    function pauseOtherVideos(currentVideoElement) {
-        videos.forEach(video => {
-            if (video !== currentVideoElement) {
-                video.pause();
-                video.currentTime = 0;
-                video.parentElement.classList.remove('playing');
-            }
-        });
-    }
-    
-    // Video click to play/pause
-    videoWrappers.forEach(wrapper => {
-        const video = wrapper.querySelector('.training-video');
-        
-        wrapper.addEventListener('click', function() {
-            if (video.paused) {
-                // Pause other videos
-                pauseOtherVideos(video);
-                // Play current video
-                video.play();
-                wrapper.classList.add('playing');
-                currentVideo = video;
-            } else {
-                video.pause();
-                wrapper.classList.remove('playing');
-                currentVideo = null;
-            }
-        });
-        
-        // Video ended
-        video.addEventListener('ended', function() {
-            wrapper.classList.remove('playing');
-            currentVideo = null;
-        });
-    });
-    
-    // Navigation for mobile/tablet
-    if (window.innerWidth <= 1024) {
-        let startX = 0;
-        let currentScroll = 0;
-        
-        carousel.addEventListener('touchstart', (e) => {
-            startX = e.touches[0].clientX;
-            currentScroll = carousel.scrollLeft;
-        });
-        
-        carousel.addEventListener('touchmove', (e) => {
-            if (!startX) return;
-            const x = e.touches[0].clientX;
-            const walk = (x - startX) * 2;
-            carousel.scrollLeft = currentScroll - walk;
-        });
-        
-        // Button navigation for tablets
-        if (prevBtn && nextBtn) {
-            prevBtn.addEventListener('click', () => {
-                carousel.scrollBy({ left: -300, behavior: 'smooth' });
-            });
-            
-            nextBtn.addEventListener('click', () => {
-                carousel.scrollBy({ left: 300, behavior: 'smooth' });
-            });
-        }
-    }
-    
-    // Auto-pause when video goes out of view (mobile)
-    if (window.innerWidth <= 768) {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (!entry.isIntersecting) {
-                    const video = entry.target.querySelector('.training-video');
-                    if (video && !video.paused) {
-                        video.pause();
-                        video.parentElement.classList.remove('playing');
-                    }
-                }
-            });
-        }, { threshold: 0.5 });
-        
-        document.querySelectorAll('.video-item').forEach(item => {
-            observer.observe(item);
-        });
-    }
-});
-
-//CHAT BOT................................................................................................................................................
-// ===== ELITE CHATBOT - BRANCH PRICING =====
+// ===== ELITE CHATBOT - FIXED BRANCH FLOW =====
 class EliteChatbot {
     constructor() {
         this.userData = {
@@ -317,7 +146,7 @@ class EliteChatbot {
             },
             { 
                 text: 'Choose Different Plan', 
-                action: () => this.showPackageSelection() 
+                action: () => this.showBranchSelection() 
             }
         ]);
         
@@ -325,29 +154,62 @@ class EliteChatbot {
         this.showInput(false);
     }
 
-    showPackageSelection() {
+    // NEW: Show branch selection first
+    showBranchSelection() {
         this.userData.selectedPackage = null;
         this.userData.branch = null;
         this.hasShownPackageMessage = false;
-        this.addMessage('bot', `**Choose Your Membership Package:**`);
+        
+        this.addMessage('bot', `**Choose Your Branch:**`);
+        
+        this.showActionButtons([
+            { 
+                text: '🏢 Overport Branch', 
+                action: () => this.showOverportPackages() 
+            },
+            { 
+                text: '📍 Merebank Plaza', 
+                action: () => this.showMerebankPackages() 
+            }
+        ]);
+    }
+
+    showOverportPackages() {
+        this.userData.branch = 'OVERPORT';
+        this.addMessage('user', 'Overport Branch');
+        this.addMessage('bot', `**Overport Branch Packages:**`);
         
         const packages = [
-            { name: 'GENERAL - OVERPORT', price: 'R350/month' },
-            { name: 'STUDENT - OVERPORT', price: 'R200/month' },
-            { name: 'DEBIT ORDER - OVERPORT', price: 'R250/month' },
-            { name: 'PENSIONER - OVERPORT', price: 'R250/month' },
-            { name: '6 MONTH PACKAGE - OVERPORT', price: 'R1,500 once-off' },
-            { name: 'FAMILY PACKAGE - OVERPORT', price: 'R800/month' },
-            { name: 'GENERAL - MEREBANK', price: 'R300/month' },
-            { name: 'DEBIT ORDER - MEREBANK', price: 'R200/month' },
-            { name: 'STUDENT - MEREBANK', price: 'R200/month' },
-            { name: '6 MONTH PACKAGE - MEREBANK', price: 'R1,200 once-off' },
-            { name: 'FAMILY PACKAGE - MEREBANK', price: 'R600/month' }
+            { name: 'GENERAL', price: 'R350/month' },
+            { name: 'STUDENT', price: 'R200/month' },
+            { name: 'DEBIT ORDER', price: 'R250/month' },
+            { name: 'PENSIONER', price: 'R250/month' },
+            { name: '6 MONTH PACKAGE', price: 'R1,500 once-off' },
+            { name: 'FAMILY PACKAGE', price: 'R800/month' }
         ];
         
         this.showActionButtons(packages.map(pkg => ({
             text: `${pkg.name} - ${pkg.price}`,
-            action: () => this.selectPackageInChat(pkg.name)
+            action: () => this.selectPackageInChat(`${pkg.name} - OVERPORT`)
+        })));
+    }
+
+    showMerebankPackages() {
+        this.userData.branch = 'MEREBANK';
+        this.addMessage('user', 'Merebank Plaza');
+        this.addMessage('bot', `**Merebank Plaza Packages:**`);
+        
+        const packages = [
+            { name: 'GENERAL', price: 'R300/month' },
+            { name: 'DEBIT ORDER', price: 'R200/month' },
+            { name: 'STUDENT', price: 'R150/month' },
+            { name: '6 MONTH PACKAGE', price: 'R1,200 once-off' },
+            { name: 'FAMILY PACKAGE', price: 'R600/month' }
+        ];
+        
+        this.showActionButtons(packages.map(pkg => ({
+            text: `${pkg.name} - ${pkg.price}`,
+            action: () => this.selectPackageInChat(`${pkg.name} - MEREBANK`)
         })));
     }
 
@@ -382,7 +244,7 @@ class EliteChatbot {
         const merebankPrices = {
             'GENERAL - MEREBANK': '**First Payment:** R400\n(R300/month + R100 card fee)',
             'DEBIT ORDER - MEREBANK': '**First Payment:** R300\n(R200/month + R100 card fee)',
-            'STUDENT - MEREBANK': '**First Payment:** R300\n(R200/month + R100 card fee)',
+            'STUDENT - MEREBANK': '**First Payment:** R250\n(R150/month + R100 card fee)',
             '6 MONTH PACKAGE - MEREBANK': '**Total:** R1,300\n(R1,200 + R100 card fee)',
             'FAMILY PACKAGE - MEREBANK': '**First Payment:** R700\n(R600/month + R100 card fee)',
             'DAY PASS - MEREBANK': '**Day Pass:** R50'
@@ -457,7 +319,7 @@ class EliteChatbot {
                 </div>
                 <div class="summary-item">
                     <span class="summary-label">Package:</span>
-                    <span class="summary-value">${this.userData.selectedPackage}</span>
+                    <span class="summary-value">${this.userData.selectedPackage.replace(' - OVERPORT', '').replace(' - MEREBANK', '')}</span>
                 </div>
                 <div class="summary-item">
                     <span class="summary-label">Location:</span>
@@ -509,12 +371,14 @@ class EliteChatbot {
             ? 'Merebank Plaza, 50 Bombay Walk, Merebank' 
             : 'Spark Lifestyle Centre, 98 Cannon Avenue, Overport';
             
+        const cleanPackageName = this.userData.selectedPackage.replace(' - OVERPORT', '').replace(' - MEREBANK', '');
+            
         return `Hi Elite Health Club! 
 
 I'd like to book a gym tour:
 
 Name: ${this.userData.name}
-Package: ${this.userData.selectedPackage}
+Package: ${cleanPackageName}
 Location: ${location}
 Tour Time: ${this.userData.tourTime}
 
@@ -575,7 +439,7 @@ Please confirm my booking!`;
         if (lowerMessage.includes('hello') || lowerMessage.includes('hi')) {
             this.addMessage('bot', '**Hello!** Welcome to Elite Health Club!');
         } else if (lowerMessage.includes('price') || lowerMessage.includes('cost')) {
-            this.addMessage('bot', `**Membership Pricing:**\n\n• Overport Branch:\n  - Student: R200/month\n  - General: R350/month\n  - Debit: R250/month\n  - Pensioner: R250/month\n  - 6-Month: R1,500 once-off\n  - Family: R800/month\n  + R400 joining fee\n\n• Merebank Branch:\n  - General: R300/month\n  - Debit: R200/month\n  - Student: R200/month\n  - 6-Month: R1,200 once-off\n  - Family: R600/month\n  + R100 card fee`);
+            this.addMessage('bot', `**Membership Pricing:**\n\n• Overport Branch:\n  - Student: R200/month\n  - General: R350/month\n  - Debit: R250/month\n  - Pensioner: R250/month\n  - 6-Month: R1,500 once-off\n  - Family: R800/month\n  + R400 joining fee\n\n• Merebank Branch:\n  - General: R300/month\n  - Debit: R200/month\n  - Student: R150/month\n  - 6-Month: R1,200 once-off\n  - Family: R600/month\n  + R100 card fee`);
         } else if (lowerMessage.includes('hour') || lowerMessage.includes('open')) {
             this.addMessage('bot', `**Operating Hours:**\n\n• Mon-Thu: 5:00 AM - 9:00 PM\n• Friday: 5:00 AM - 8:00 PM\n• Saturday: 6:00 AM - 4:00 PM\n• Sunday: 6:00 AM - 2:00 PM`);
         } else if (lowerMessage.includes('where') || lowerMessage.includes('location')) {
@@ -630,7 +494,7 @@ Please confirm my booking!`;
     handleQuickAction(action) {
         switch(action) {
             case 'Choose Membership Package':
-                this.showPackageSelection();
+                this.showBranchSelection(); // NOW SHOWS BRANCH SELECTION FIRST
                 break;
             case 'Ask Questions':
                 this.addMessage('user', 'I have questions');
