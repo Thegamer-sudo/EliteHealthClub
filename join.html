@@ -10,14 +10,14 @@
     <link rel="stylesheet" href="css/site.css">
     <style>
         .join-hero-section {
-            height: 50vh; /* INCREASED HEIGHT SO TEXT ISN'T CUT OFF */
+            height: 50vh;
             background: linear-gradient(rgba(5, 5, 5, 0.70), rgba(5, 5, 5, 0.70)), url('images/gym-main.jpg');
             background-size: cover;
             background-position: center;
             display: flex;
             align-items: center;
             margin-top: -80px;
-            padding-top: 120px; /* INCREASED PADDING TO PUSH CONTENT DOWN */
+            padding-top: 120px;
         }
 
         .membership-plan {
@@ -93,6 +93,29 @@
             margin: 1rem 0;
         }
 
+        /* Branch Tabs */
+        .branch-tabs-container {
+            margin-bottom: 2rem;
+        }
+
+        .branch-tabs .btn {
+            border-radius: 25px;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+        }
+
+        .branch-pricing {
+            display: none;
+        }
+
+        .branch-pricing.active {
+            display: block;
+        }
+
+        .fee-notice {
+            margin-bottom: 1rem;
+        }
+
         /* Operating Hours */
         .hours-container {
             max-width: 500px;
@@ -146,7 +169,7 @@
 
         @media (max-width: 768px) {
             .join-hero-section {
-                height: 45vh; /* ADJUSTED FOR MOBILE */
+                height: 45vh;
                 padding-top: 100px;
             }
             
@@ -162,6 +185,11 @@
                 flex-direction: column;
                 text-align: center;
                 gap: 0.5rem;
+            }
+
+            .branch-tabs .btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
             }
         }
     </style>
@@ -192,13 +220,13 @@
                     <a class="nav-link" href="contact.html">Contact</a>
                 </li>
                 <li class="nav-item ms-2">
-                    <!-- FIXED: Changed from WhatsApp to join.html -->
                     <a class="btn btn-gold" href="join.html">Join Now</a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
+
     <!-- Hero Section -->
     <section class="join-hero-section">
         <div class="container">
@@ -218,6 +246,26 @@
             <div class="col-lg-10">
                 <h2 class="section-title text-center mb-4">Choose Your Membership</h2>
                 
+                <!-- BRANCH SELECTION TABS -->
+                <div class="branch-tabs-container text-center mb-4">
+                    <div class="btn-group branch-tabs" role="group">
+                        <button type="button" class="btn btn-gold active" data-branch="durban">
+                            <i class="fas fa-building me-2"></i>Durban Main
+                        </button>
+                        <button type="button" class="btn btn-outline-gold" data-branch="merebank">
+                            <i class="fas fa-store me-2"></i>Merebank Plaza
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Branch Description -->
+                <div class="text-center mb-4">
+                    <p class="text-light" id="branch-description">
+                        <i class="fas fa-map-marker-alt me-2"></i>
+                        <strong id="branch-location">Level 3 – The Spark Lifestyle Centre, 98 Cannon Avenue, Overport, Durban</strong>
+                    </p>
+                </div>
+                
                 <!-- New Booking Info -->
                 <div class="text-center mb-4">
                     <div class="alert alert-info" style="background: rgba(212, 175, 55, 0.1); border: 1px solid var(--gold); color: var(--text-light);">
@@ -226,106 +274,214 @@
                     </div>
                 </div>
                 
-                <div class="row">
-                    <!-- General Membership -->
-                    <div class="col-md-6 col-lg-4 mb-4">
-                        <div class="membership-plan">
-                            <h3 class="plan-title">GENERAL</h3>
-                            <div class="plan-price">R350<span>/month</span></div>
-                            <ul class="plan-features">
-                                <li>Full gym access</li>
-                                <li>All equipment included</li>
-                                <li>Locker room facilities</li>
-                                <li>Free parking</li>
-                            </ul>
-                            <button class="btn btn-outline-gold w-100" onclick="eliteChatbot.handlePackageSelection('GENERAL')">
-                                Choose General
-                            </button>
+                <!-- DURBAN PRICING SECTION -->
+                <div class="branch-pricing active" id="durban-pricing">
+                    <div class="row">
+                        <!-- General Membership -->
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div class="membership-plan">
+                                <h3 class="plan-title">GENERAL</h3>
+                                <div class="plan-price">R350<span>/month</span></div>
+                                <ul class="plan-features">
+                                    <li>Full gym access</li>
+                                    <li>All equipment included</li>
+                                    <li>Locker room facilities</li>
+                                    <li>Free parking</li>
+                                </ul>
+                                <button class="btn btn-outline-gold w-100" onclick="eliteChatbot.handlePackageSelection('GENERAL')">
+                                    Choose General
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <!-- Debit Membership -->
-                    <div class="col-md-6 col-lg-4 mb-4">
-                        <div class="membership-plan">
-                            <h3 class="plan-title">DEBIT ORDER</h3>
-                            <div class="plan-price">R250<span>/month</span></div>
-                            <ul class="plan-features">
-                                <li>All General benefits</li>
-                                <li>Convenient monthly debit</li>
-                                <li>No price increases</li>
-                                <li>Easy cancellation</li>
-                            </ul>
-                            <button class="btn btn-outline-gold w-100" onclick="eliteChatbot.handlePackageSelection('DEBIT ORDER')">
-                                Choose Debit
-                            </button>
+                        
+                        <!-- Debit Membership -->
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div class="membership-plan">
+                                <h3 class="plan-title">DEBIT ORDER</h3>
+                                <div class="plan-price">R250<span>/month</span></div>
+                                <ul class="plan-features">
+                                    <li>All General benefits</li>
+                                    <li>Convenient monthly debit</li>
+                                    <li>No price increases</li>
+                                    <li>Easy cancellation</li>
+                                </ul>
+                                <button class="btn btn-outline-gold w-100" onclick="eliteChatbot.handlePackageSelection('DEBIT ORDER')">
+                                    Choose Debit
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <!-- Student Membership -->
-                    <div class="col-md-6 col-lg-4 mb-4">
-                        <div class="membership-plan">
-                            <h3 class="plan-title">STUDENT</h3>
-                            <div class="plan-price">R200<span>/month</span></div>
-                            <ul class="plan-features">
-                                <li>Special student pricing</li>
-                                <li>Debit order available</li>
-                                <li>Valid student ID required</li>
-                                <li>All gym access included</li>
-                            </ul>
-                            <button class="btn btn-outline-gold w-100" onclick="eliteChatbot.handlePackageSelection('STUDENT')">
-                                Choose Student
-                            </button>
+                        
+                        <!-- Student Membership -->
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div class="membership-plan">
+                                <h3 class="plan-title">STUDENT</h3>
+                                <div class="plan-price">R200<span>/month</span></div>
+                                <ul class="plan-features">
+                                    <li>Special student pricing</li>
+                                    <li>Debit order available</li>
+                                    <li>Valid student ID required</li>
+                                    <li>All gym access included</li>
+                                </ul>
+                                <button class="btn btn-outline-gold w-100" onclick="eliteChatbot.handlePackageSelection('STUDENT')">
+                                    Choose Student
+                                </button>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Pensioner Membership -->
-                    <div class="col-md-6 col-lg-4 mb-4">
-                        <div class="membership-plan">
-                            <h3 class="plan-title">PENSIONER</h3>
-                            <div class="plan-price">R250<span>/month</span></div>
-                            <ul class="plan-features">
-                                <li>Special pensioner rate</li>
-                                <li>General membership benefits</li>
-                                <li>Peaceful training environment</li>
-                                <li>Senior-friendly equipment</li>
-                            </ul>
-                            <button class="btn btn-outline-gold w-100" onclick="eliteChatbot.handlePackageSelection('PENSIONER')">
-                                Choose Pensioner
-                            </button>
+                        <!-- Pensioner Membership -->
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div class="membership-plan">
+                                <h3 class="plan-title">PENSIONER</h3>
+                                <div class="plan-price">R250<span>/month</span></div>
+                                <ul class="plan-features">
+                                    <li>Special pensioner rate</li>
+                                    <li>General membership benefits</li>
+                                    <li>Peaceful training environment</li>
+                                    <li>Senior-friendly equipment</li>
+                                </ul>
+                                <button class="btn btn-outline-gold w-100" onclick="eliteChatbot.handlePackageSelection('PENSIONER')">
+                                    Choose Pensioner
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- 6 Month Package -->
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div class="membership-plan">
+                                <h3 class="plan-title">6 MONTH PACKAGE</h3>
+                                <div class="plan-price">R1,500<span>/once off</span></div>
+                                <ul class="plan-features">
+                                    <li>6 months full access</li>
+                                    <li>Save R300 total</li>
+                                    <li>No monthly payments</li>
+                                    <li>Perfect commitment package</li>
+                                </ul>
+                                <button class="btn btn-outline-gold w-100" onclick="eliteChatbot.handlePackageSelection('6 MONTH PACKAGE')">
+                                    Choose 6 Months
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Family Membership -->
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div class="membership-plan">
+                                <h3 class="plan-title">FAMILY PACKAGE</h3>
+                                <div class="plan-price">R800<span>/month</span></div>
+                                <ul class="plan-features">
+                                    <li>Minimum 4 family members</li>
+                                    <li>Massive family savings</li>
+                                    <li>All individual benefits</li>
+                                    <li>Perfect for households</li>
+                                </ul>
+                                <button class="btn btn-outline-gold w-100" onclick="eliteChatbot.handlePackageSelection('FAMILY PACKAGE')">
+                                    Choose Family
+                                </button>
+                            </div>
                         </div>
                     </div>
+                </div>
 
-                    <!-- 6 Month Package -->
-                    <div class="col-md-6 col-lg-4 mb-4">
-                        <div class="membership-plan">
-                            <h3 class="plan-title">6 MONTH PACKAGE</h3>
-                            <div class="plan-price">R1,500<span>/once off</span></div>
-                            <ul class="plan-features">
-                                <li>6 months full access</li>
-                                <li>Save R300 total</li>
-                                <li>No monthly payments</li>
-                                <li>Perfect commitment package</li>
-                            </ul>
-                            <button class="btn btn-outline-gold w-100" onclick="eliteChatbot.handlePackageSelection('6 MONTH PACKAGE')">
-                                Choose 6 Months
-                            </button>
+                <!-- MEREBANK PRICING SECTION -->
+                <div class="branch-pricing" id="merebank-pricing">
+                    <div class="row">
+                        <!-- Merebank General Membership -->
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div class="membership-plan">
+                                <h3 class="plan-title">GENERAL</h3>
+                                <div class="plan-price">R300<span>/month</span></div>
+                                <ul class="plan-features">
+                                    <li>Full gym access</li>
+                                    <li>All equipment included</li>
+                                    <li>Locker room facilities</li>
+                                    <li>Free parking</li>
+                                </ul>
+                                <div class="fee-notice text-center mb-2">
+                                    <small class="text-gold">+ R400 Joining Fee + R100 Card Fee</small>
+                                </div>
+                                <button class="btn btn-outline-gold w-100" onclick="eliteChatbot.handlePackageSelection('GENERAL - MEREBANK')">
+                                    Choose General
+                                </button>
+                            </div>
                         </div>
-                    </div>
+                        
+                        <!-- Merebank Debit Membership -->
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div class="membership-plan">
+                                <h3 class="plan-title">DEBIT ORDER</h3>
+                                <div class="plan-price">R200<span>/month</span></div>
+                                <ul class="plan-features">
+                                    <li>All General benefits</li>
+                                    <li>Convenient monthly debit</li>
+                                    <li>No price increases</li>
+                                    <li>Easy cancellation</li>
+                                </ul>
+                                <div class="fee-notice text-center mb-2">
+                                    <small class="text-gold">+ R400 Joining Fee + R100 Card Fee</small>
+                                </div>
+                                <button class="btn btn-outline-gold w-100" onclick="eliteChatbot.handlePackageSelection('DEBIT ORDER - MEREBANK')">
+                                    Choose Debit
+                                </button>
+                            </div>
+                        </div>
 
-                    <!-- Family Membership -->
-                    <div class="col-md-6 col-lg-4 mb-4">
-                        <div class="membership-plan">
-                            <h3 class="plan-title">FAMILY PACKAGE</h3>
-                            <div class="plan-price">R800<span>/month</span></div>
-                            <ul class="plan-features">
-                                <li>Minimum 4 family members</li>
-                                <li>Massive family savings</li>
-                                <li>All individual benefits</li>
-                                <li>Perfect for households</li>
-                            </ul>
-                            <button class="btn btn-outline-gold w-100" onclick="eliteChatbot.handlePackageSelection('FAMILY PACKAGE')">
-                                Choose Family
-                            </button>
+                        <!-- Merebank Student Membership -->
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div class="membership-plan">
+                                <h3 class="plan-title">STUDENT</h3>
+                                <div class="plan-price">R200<span>/month</span></div>
+                                <ul class="plan-features">
+                                    <li>Special student pricing</li>
+                                    <li>Debit order available</li>
+                                    <li>Valid student ID required</li>
+                                    <li>All gym access included</li>
+                                </ul>
+                                <div class="fee-notice text-center mb-2">
+                                    <small class="text-gold">+ R400 Joining Fee + R100 Card Fee</small>
+                                </div>
+                                <button class="btn btn-outline-gold w-100" onclick="eliteChatbot.handlePackageSelection('STUDENT - MEREBANK')">
+                                    Choose Student
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Merebank 6 Month Package -->
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div class="membership-plan">
+                                <h3 class="plan-title">6 MONTH PACKAGE</h3>
+                                <div class="plan-price">R1,200<span>/once off</span></div>
+                                <ul class="plan-features">
+                                    <li>6 months full access</li>
+                                    <li>Best value package</li>
+                                    <li>No monthly payments</li>
+                                    <li>Perfect commitment package</li>
+                                </ul>
+                                <div class="fee-notice text-center mb-2">
+                                    <small class="text-gold">+ R100 Card Fee (No joining fee)</small>
+                                </div>
+                                <button class="btn btn-outline-gold w-100" onclick="eliteChatbot.handlePackageSelection('6 MONTH PACKAGE - MEREBANK')">
+                                    Choose 6 Months
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Merebank Family Package -->
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div class="membership-plan">
+                                <h3 class="plan-title">FAMILY PACKAGE</h3>
+                                <div class="plan-price">R600<span>/month</span></div>
+                                <ul class="plan-features">
+                                    <li>2 Adults + 2 Children</li>
+                                    <li>Massive family savings</li>
+                                    <li>All individual benefits</li>
+                                    <li>Perfect for households</li>
+                                </ul>
+                                <div class="fee-notice text-center mb-2">
+                                    <small class="text-gold">+ R400 Joining Fee + R100 Card Fee</small>
+                                </div>
+                                <button class="btn btn-outline-gold w-100" onclick="eliteChatbot.handlePackageSelection('FAMILY PACKAGE - MEREBANK')">
+                                    Choose Family
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -333,11 +489,11 @@
                 <!-- R400 Joining Fee Notice -->
                 <div class="joining-fee-notice text-center mt-4">
                     <div class="notice-card">
-                        <h4 class="gold-text mb-3">📝 Important Membership Information</h4>
+                        <h4 class="gold-text mb-3">Important Membership Information</h4>
                         <p class="text-light mb-2">
                             <strong>All new members require a <span class="gold-text">R400 Joining Fee</span></strong>
                         </p>
-                        <p class="text-light small mb-0">
+                        <p class="text-light small mb-0" id="fee-details">
                             Your first payment will be: <strong>R400 Joining Fee + Your Chosen Monthly Rate</strong>
                         </p>
                     </div>
@@ -452,6 +608,45 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="js/site.js"></script>
+
+    <!-- Tab Switching JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabButtons = document.querySelectorAll('.branch-tabs .btn');
+            const pricingSections = document.querySelectorAll('.branch-pricing');
+            const branchLocation = document.getElementById('branch-location');
+            const feeDetails = document.getElementById('fee-details');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const branch = this.getAttribute('data-branch');
+                    
+                    // Update active tab
+                    tabButtons.forEach(btn => {
+                        btn.classList.remove('btn-gold', 'active');
+                        btn.classList.add('btn-outline-gold');
+                    });
+                    this.classList.remove('btn-outline-gold');
+                    this.classList.add('btn-gold', 'active');
+                    
+                    // Show correct pricing section
+                    pricingSections.forEach(section => {
+                        section.classList.remove('active');
+                    });
+                    document.getElementById(`${branch}-pricing`).classList.add('active');
+                    
+                    // Update location text
+                    if (branch === 'durban') {
+                        branchLocation.textContent = 'Level 3 – The Spark Lifestyle Centre, 98 Cannon Avenue, Overport, Durban';
+                        feeDetails.innerHTML = 'Your first payment will be: <strong>R400 Joining Fee + Your Chosen Monthly Rate</strong>';
+                    } else {
+                        branchLocation.textContent = 'Merebank Plaza, 50 Bombay Walk, Merebank, Durban';
+                        feeDetails.innerHTML = 'Your first payment will be: <strong>R400 Joining Fee + R100 Card Fee + Your Chosen Monthly Rate</strong>';
+                    }
+                });
+            });
+        });
+    </script>
 
     <!-- Elite Health Club Chatbot -->
 <div id="elite-chatbot">
