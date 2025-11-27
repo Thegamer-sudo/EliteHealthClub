@@ -1,6 +1,6 @@
-// ===== ELITE HEALTH CLUB - MAIN SITE JS =====
+// ===== ELITE HEALTH CLUB - EMERGENCY BUG FIX =====
 
-// Elite Chatbot Class
+// Elite Chatbot Class - COMPLETELY REWRITTEN
 class EliteChatbot {
     constructor() {
         this.userData = {
@@ -10,50 +10,65 @@ class EliteChatbot {
             branch: null
         };
         this.currentStep = 'welcome';
-        this.isMobile = this.checkMobile();
+        this.isMobile = window.innerWidth <= 768;
         this.hasShownPackageMessage = false;
+        this.isInitialized = false;
+        
+        console.log('Chatbot constructor called');
         this.init();
     }
 
     init() {
+        console.log('Chatbot init started');
+        
+        // Wait for DOM to be ready
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', () => {
                 this.setupEventListeners();
             });
         } else {
-            this.setupEventListeners();
+            // DOM already ready, setup immediately
+            setTimeout(() => {
+                this.setupEventListeners();
+            }, 100);
         }
-        console.log('Elite Chatbot initialized');
-    }
-
-    checkMobile() {
-        return window.innerWidth <= 768;
     }
 
     setupEventListeners() {
+        console.log('Setting up event listeners');
+        
+        // CHATBOT TOGGLE BUTTON - FIXED
         const toggleBtn = document.getElementById('chatbot-toggle');
-        const closeBtn = document.getElementById('chatbot-close');
-        const sendBtn = document.getElementById('chatbot-send');
-        const inputField = document.getElementById('chatbot-input');
-
         if (toggleBtn) {
-            toggleBtn.addEventListener('click', () => {
+            console.log('Toggle button found');
+            toggleBtn.addEventListener('click', (e) => {
+                console.log('Toggle button clicked');
+                e.stopPropagation();
                 this.toggleChat();
             });
+        } else {
+            console.error('Toggle button NOT found!');
         }
 
+        // CHATBOT CLOSE BUTTON
+        const closeBtn = document.getElementById('chatbot-close');
         if (closeBtn) {
-            closeBtn.addEventListener('click', () => {
+            closeBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
                 this.closeChat();
             });
         }
 
+        // SEND BUTTON
+        const sendBtn = document.getElementById('chatbot-send');
         if (sendBtn) {
             sendBtn.addEventListener('click', () => {
                 this.sendMessage();
             });
         }
 
+        // INPUT FIELD ENTER KEY
+        const inputField = document.getElementById('chatbot-input');
         if (inputField) {
             inputField.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') {
@@ -62,55 +77,67 @@ class EliteChatbot {
             });
         }
 
+        // PACKAGE SELECTION FROM PAGE
         document.addEventListener('click', (e) => {
             if (e.target.closest('.membership-plan .btn')) {
+                console.log('Package button clicked');
                 const planElement = e.target.closest('.membership-plan');
                 const planTitle = planElement.querySelector('.plan-title').textContent.trim();
                 const branch = this.detectBranchFromPage();
                 this.handlePackageSelection(planTitle, branch);
-                e.preventDefault();
-                return false;
             }
         });
+
+        this.isInitialized = true;
+        console.log('Event listeners setup complete');
     }
 
     detectBranchFromPage() {
         const activePricing = document.querySelector('.branch-pricing.active');
-        if (activePricing) {
-            if (activePricing.id === 'merebank-pricing') {
-                return 'MEREBANK';
-            } else if (activePricing.id === 'overport-pricing') {
-                return 'OVERPORT';
-            }
+        if (activePricing && activePricing.id === 'merebank-pricing') {
+            return 'MEREBANK';
         }
         return 'OVERPORT';
     }
 
     toggleChat() {
+        console.log('toggleChat called');
         const container = document.getElementById('chatbot-container');
-        if (!container) return;
+        if (!container) {
+            console.error('Chatbot container not found!');
+            return;
+        }
         
         const isOpening = container.style.display !== 'flex';
+        console.log('Is opening:', isOpening);
+        
         container.style.display = isOpening ? 'flex' : 'none';
         
         if (isOpening) {
+            console.log('Opening chatbot');
+            // Focus on input for desktop
             if (!this.isMobile) {
                 setTimeout(() => {
                     const input = document.getElementById('chatbot-input');
                     if (input) input.focus();
                 }, 300);
             }
+            // Show welcome message if no package selected
             if (!this.userData.selectedPackage) {
+                console.log('Showing welcome message');
                 this.showWelcomeMessage();
             }
         } else {
+            console.log('Closing chatbot');
             this.hideKeyboard();
         }
     }
 
     closeChat() {
         const container = document.getElementById('chatbot-container');
-        if (container) container.style.display = 'none';
+        if (container) {
+            container.style.display = 'none';
+        }
         this.hideKeyboard();
     }
 
@@ -138,24 +165,35 @@ class EliteChatbot {
     }
 
     handlePackageSelection(packageName, branch = null) {
+        console.log('handlePackageSelection:', packageName, branch);
+        
+        // CRITICAL FIX: Reset flag FIRST
         this.hasShownPackageMessage = false;
+        
         this.userData.selectedPackage = packageName;
         this.userData.branch = branch || this.detectBranchFromPage();
         
+        // Open chatbot
         const container = document.getElementById('chatbot-container');
-        if (container) container.style.display = 'flex';
+        if (container) {
+            container.style.display = 'flex';
+        }
         
+        // Clear messages
         const messagesContainer = document.getElementById('chatbot-messages');
-        if (messagesContainer) messagesContainer.innerHTML = '';
-        
+        if (messagesContainer) {
+            messagesContainer.innerHTML = '';
+        }
         this.clearQuickActions();
         
+        // Show confirmation after short delay
         setTimeout(() => {
             this.showPackageConfirmation();
-        }, 150);
+        }, 200);
     }
 
     showWelcomeMessage() {
+        console.log('showWelcomeMessage called');
         this.addMessage('bot', `Hi! I'm Elite Assistant!\nWhat can I help you with today?`);
         this.showQuickActions(['Choose Membership Package', 'Ask Questions', 'Book Gym Tour']);
         this.currentStep = 'welcome';
@@ -163,8 +201,17 @@ class EliteChatbot {
     }
 
     showPackageConfirmation() {
-        if (this.hasShownPackageMessage) return;
+        console.log('showPackageConfirmation called, flag:', this.hasShownPackageMessage);
+        
+        // CRITICAL FIX: Prevent double execution
+        if (this.hasShownPackageMessage) {
+            console.log('BLOCKED: Already showed package confirmation');
+            return;
+        }
+        
+        // Set flag IMMEDIATELY
         this.hasShownPackageMessage = true;
+        console.log('Setting flag to true');
         
         const priceInfo = this.getPackagePrice(this.userData.selectedPackage, this.userData.branch);
         const cleanPackageName = this.userData.selectedPackage.replace(' - OVERPORT', '').replace(' - MEREBANK', '');
@@ -256,13 +303,7 @@ class EliteChatbot {
             'PENSIONER': '**First Payment:** R650\n(R250/month + R400 joining fee)',
             '6 MONTH PACKAGE': '**Total:** R1,500\n(6 months - no joining fee)',
             'FAMILY PACKAGE': '**First Payment:** R1,200\n(R800/month + R400 joining fee)',
-            'DAY PASS': '**Day Pass:** R50',
-            'STUDENT - OVERPORT': '**First Payment:** R600\n(R200/month + R400 joining fee)',
-            'GENERAL - OVERPORT': '**First Payment:** R750\n(R350/month + R400 joining fee)',
-            'DEBIT ORDER - OVERPORT': '**First Payment:** R650\n(R250/month + R400 joining fee)',
-            'PENSIONER - OVERPORT': '**First Payment:** R650\n(R250/month + R400 joining fee)',
-            '6 MONTH PACKAGE - OVERPORT': '**Total:** R1,500\n(6 months - no joining fee)',
-            'FAMILY PACKAGE - OVERPORT': '**First Payment:** R1,200\n(R800/month + R400 joining fee)'
+            'DAY PASS': '**Day Pass:** R50'
         };
         
         const merebankPrices = {
@@ -271,20 +312,15 @@ class EliteChatbot {
             'STUDENT': '**First Payment:** R250\n(R150/month + R100 card fee)',
             '6 MONTH PACKAGE': '**Total:** R1,300\n(R1,200 + R100 card fee)',
             'FAMILY PACKAGE': '**First Payment:** R700\n(R600/month + R100 card fee)',
-            'DAY PASS': '**Day Pass:** R50',
-            'GENERAL - MEREBANK': '**First Payment:** R400\n(R300/month + R100 card fee)',
-            'DEBIT ORDER - MEREBANK': '**First Payment:** R300\n(R200/month + R100 card fee)',
-            'STUDENT - MEREBANK': '**First Payment:** R250\n(R150/month + R100 card fee)',
-            '6 MONTH PACKAGE - MEREBANK': '**Total:** R1,300\n(R1,200 + R100 card fee)',
-            'FAMILY PACKAGE - MEREBANK': '**First Payment:** R700\n(R600/month + R100 card fee)'
+            'DAY PASS': '**Day Pass:** R50'
         };
 
         const cleanPackageName = packageName.replace(' - OVERPORT', '').replace(' - MEREBANK', '');
         
         if (branch === 'MEREBANK') {
-            return merebankPrices[packageName] || merebankPrices[cleanPackageName] || 'Contact for pricing';
+            return merebankPrices[cleanPackageName] || 'Contact for pricing';
         } else {
-            return overportPrices[packageName] || overportPrices[cleanPackageName] || 'Contact for pricing';
+            return overportPrices[cleanPackageName] || 'Contact for pricing';
         }
     }
 
@@ -562,49 +598,17 @@ Please confirm my booking!`;
     }
 }
 
-// Initialize chatbot
-function initializeChatbot() {
-    if (window.eliteChatbot) return;
-    setTimeout(() => {
-        window.eliteChatbot = new EliteChatbot();
-    }, 500);
-}
-
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeChatbot);
-} else {
-    initializeChatbot();
-}
-
-window.addEventListener('load', initializeChatbot);
-
-// ===== ADDITIONAL SITE FUNCTIONALITY =====
-// Smooth scrolling for anchor links
+// SIMPLE INITIALIZATION - NO COMPLEX TIMING
 document.addEventListener('DOMContentLoaded', function() {
-    // Smooth scroll for navigation links
-    const navLinks = document.querySelectorAll('a[href^="#"]');
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                targetElement.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
-    
-    // Mobile menu toggle (if needed)
-    const navbarToggler = document.querySelector('.navbar-toggler');
-    if (navbarToggler) {
-        navbarToggler.addEventListener('click', function() {
-            const navbarNav = document.getElementById('navbarNav');
-            if (navbarNav) {
-                navbarNav.classList.toggle('show');
-            }
-        });
+    console.log('DOM loaded, initializing chatbot');
+    window.eliteChatbot = new EliteChatbot();
+});
+
+// Fallback initialization
+window.addEventListener('load', function() {
+    console.log('Window loaded');
+    if (!window.eliteChatbot) {
+        console.log('Fallback: Initializing chatbot');
+        window.eliteChatbot = new EliteChatbot();
     }
 });
