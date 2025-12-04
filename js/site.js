@@ -612,3 +612,81 @@ window.addEventListener('load', function() {
         window.eliteChatbot = new EliteChatbot();
     }
 });
+
+// ===== CHRISTMAS SNOW EFFECT =====
+function createSnowflakes() {
+    const snowContainer = document.createElement('div');
+    snowContainer.className = 'snow-container';
+    
+    // Create 30 snowflakes (more on desktop)
+    const snowflakeCount = window.innerWidth > 768 ? 30 : 15;
+    
+    for (let i = 0; i < snowflakeCount; i++) {
+        const snowflake = document.createElement('div');
+        snowflake.className = 'snowflake';
+        
+        // Random position
+        snowflake.style.left = Math.random() * 100 + 'vw';
+        
+        // Random size
+        const size = 10 + Math.random() * 15;
+        snowflake.style.fontSize = size + 'px';
+        
+        // Random animation delay
+        snowflake.style.animationDelay = Math.random() * 10 + 's';
+        
+        snowContainer.appendChild(snowflake);
+    }
+    
+    document.body.appendChild(snowContainer);
+    
+    // Optional: Remove snow after December
+    const today = new Date();
+    if (today.getMonth() > 11 || today.getMonth() < 0) { // Only Dec
+        // Auto-remove on Jan 1st
+        setTimeout(() => {
+            if (snowContainer.parentNode) {
+                snowContainer.remove();
+            }
+        }, 1000 * 60 * 60 * 24 * 7); // Remove after 1 week into Jan
+    }
+}
+
+// Only activate in December
+const today = new Date();
+if (today.getMonth() === 11) { // December is month 11 (0-indexed)
+    window.addEventListener('load', createSnowflakes);
+    
+    // Optional toggle button for testing
+    const snowToggle = document.createElement('button');
+    snowToggle.innerHTML = '❄';
+    snowToggle.style.position = 'fixed';
+    snowToggle.style.bottom = '80px';
+    snowToggle.style.right = '20px';
+    snowToggle.style.zIndex = '10000';
+    snowToggle.style.background = 'rgba(212, 175, 55, 0.9)';
+    snowToggle.style.color = '#050505';
+    snowToggle.style.border = 'none';
+    snowToggle.style.borderRadius = '50%';
+    snowToggle.style.width = '40px';
+    snowToggle.style.height = '40px';
+    snowToggle.style.cursor = 'pointer';
+    snowToggle.style.fontSize = '20px';
+    snowToggle.title = 'Toggle Snow Effect';
+    
+    snowToggle.addEventListener('click', function() {
+        const snow = document.querySelector('.snow-container');
+        if (snow) {
+            snow.remove();
+            this.innerHTML = '❄';
+            this.style.background = 'rgba(212, 175, 55, 0.9)';
+        } else {
+            createSnowflakes();
+            this.innerHTML = '⛄';
+            this.style.background = 'rgba(5, 5, 5, 0.9)';
+            this.style.color = '#D4AF37';
+        }
+    });
+    
+    document.body.appendChild(snowToggle);
+}
